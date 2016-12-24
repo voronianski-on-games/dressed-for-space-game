@@ -1,31 +1,32 @@
+debug = true
+
 local player = require('./src/player')
 local bullets = require('./src/bullets')
 
+local bgImage = nil
+
 function love.load ()
+  bgImage = love.graphics.newImage('assets/bg1.png')
   player.loadAssets()
   bullets.loadAssets()
 end
 
 function love.update (dt)
-  if love.keyboard.isDown('lcmd') and love.keyboard.isDown('q') then
-    love.event.push('quit')
-  end
-
   player.updateShooter(dt)
 
-  if love.keyboard.isDown('right') then
+  if love.keyboard.isDown('d') or love.keyboard.isDown('right') then
     player.rotateRight(dt)
   end
 
-  if love.keyboard.isDown('left') then
+  if love.keyboard.isDown('a') or love.keyboard.isDown('left') then
     player.rotateLeft(dt)
   end
 
-  if love.keyboard.isDown('down') then
+  if love.keyboard.isDown('s') or love.keyboard.isDown('down') then
     player.accelerateBackwards(dt)
   end
 
-  if love.keyboard.isDown('up') then
+  if love.keyboard.isDown('w') or love.keyboard.isDown('up') then
     player.accelerateForward(dt)
   end
 
@@ -34,11 +35,23 @@ function love.update (dt)
     player.shoot()
   end
 
-  player.update(dt)
   bullets.update(dt)
+  player.update(dt)
+end
+
+function love.keypressed (key)
+  if key == 'lcmd' and key == 'q' then
+    love.event.push('quit')
+  end
 end
 
 function love.draw ()
+  love.graphics.draw(bgImage, 0, 0)
   bullets.draw()
   player.draw()
+
+  if debug then
+    local fps = tostring(love.timer.getFPS())
+    love.graphics.print('Current FPS: ' .. fps, 10, 10)
+  end
 end

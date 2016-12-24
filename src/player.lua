@@ -39,6 +39,7 @@ function player.accelerateForward (dt)
 end
 
 function player.update (dt)
+  -- print(player.x, player.xvel, player.xvel * dt)
   player.x = player.x + player.xvel * dt
   player.y = player.y + player.yvel * dt
   player.xvel = player.xvel * 0.99
