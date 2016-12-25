@@ -31,7 +31,7 @@ function love.update (dt)
   end
 
   if (love.keyboard.isDown('x') or love.keyboard.isDown('space')) and player.canShoot then
-    bullets.create(player)
+    bullets.create(player, dt)
     player.shoot()
   end
 
