@@ -6,7 +6,7 @@ local bullets = require('./src/bullets')
 local bgImage = nil
 
 function love.load ()
-  bgImage = love.graphics.newImage('assets/bg1.png')
+  bgImage = love.graphics.newImage('assets/stars-bg.png')
   player.loadAssets()
   bullets.loadAssets()
 end

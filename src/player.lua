@@ -5,6 +5,7 @@ local ANGLE_ACCELERATION = 5
 local ACCELERATION = 100
 
 local canShootTimer = CAN_SHOOT_TIMER_MAX
+local shootSound = nil
 local player = {
   x = INITIAL_X,
   y = INITIAL_Y,
@@ -18,6 +19,7 @@ local player = {
 
 function player.loadAssets ()
   player.img = love.graphics.newImage('assets/player.png')
+  shootSound = love.audio.newSource('assets/2.wav', 'static')
 end
 
 function player.rotateLeft (dt)
@@ -39,7 +41,6 @@ function player.accelerateForward (dt)
 end
 
 function player.update (dt)
-  -- print(player.x, player.xvel, player.xvel * dt)
   player.x = player.x + player.xvel * dt
   player.y = player.y + player.yvel * dt
   player.xvel = player.xvel * 0.99
@@ -55,6 +56,7 @@ function player.updateShooter (dt)
 end
 
 function player.shoot ()
+  -- shootSound:play()
   player.canShoot = false
   canShootTimer = CAN_SHOOT_TIMER_MAX
 end
