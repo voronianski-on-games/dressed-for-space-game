@@ -1,17 +1,20 @@
-debug = true
+local debug = true
 
 local Camera = require('./vendor/gamera')
 local player = require('./src/player')
 local bullets = require('./src/bullets')
 
-local bgQuad, bgImage
-local camera
+local WORLD_WIDTH = 2000
+local WORLD_HEIGHT = 2000
+local bgQuad, bgImage, camera
 
 function love.load ()
-  camera = Camera.new(0, 0, 2000, 2000)
+  camera = Camera.new(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
+
   bgImage = love.graphics.newImage('assets/stars-bg.png')
   bgImage:setWrap('repeat', 'repeat')
-  bgQuad = love.graphics.newQuad(0, 0, 2000, 2000, bgImage:getWidth(), bgImage:getHeight())
+  bgQuad = love.graphics.newQuad(0, 0, WORLD_WIDTH, WORLD_HEIGHT, bgImage:getWidth(), bgImage:getHeight())
+
   player.loadAssets()
   bullets.loadAssets()
 end
