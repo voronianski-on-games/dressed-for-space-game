@@ -56,7 +56,7 @@ function player.updateShooter (dt)
 end
 
 function player.shoot ()
-  -- shootSound:play()
+  shootSound:play()
   player.canShoot = false
   canShootTimer = CAN_SHOOT_TIMER_MAX
 end

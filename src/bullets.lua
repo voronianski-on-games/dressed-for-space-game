@@ -1,7 +1,7 @@
 local bullets = {}
 
 local bulletImg = nil
-local bulletSpeed = 200
+local bulletSpeed = 300
 local bulletList = {}
 
 function bullets.loadAssets ()

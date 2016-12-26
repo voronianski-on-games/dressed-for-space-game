@@ -1,12 +1,17 @@
 debug = true
 
+local Camera = require('./vendor/gamera')
 local player = require('./src/player')
 local bullets = require('./src/bullets')
 
-local bgImage = nil
+local bgQuad, bgImage
+local camera
 
 function love.load ()
+  camera = Camera.new(0, 0, 2000, 2000)
   bgImage = love.graphics.newImage('assets/stars-bg.png')
+  bgImage:setWrap('repeat', 'repeat')
+  bgQuad = love.graphics.newQuad(0, 0, 2000, 2000, bgImage:getWidth(), bgImage:getHeight())
   player.loadAssets()
   bullets.loadAssets()
 end
@@ -37,6 +42,7 @@ function love.update (dt)
 
   bullets.update(dt)
   player.update(dt)
+  camera:setPosition(player.x, player.y)
 end
 
 function love.keypressed (key)
@@ -46,9 +52,11 @@ function love.keypressed (key)
 end
 
 function love.draw ()
-  love.graphics.draw(bgImage, 0, 0)
-  bullets.draw()
-  player.draw()
+  camera:draw(function ( ... )
+    love.graphics.draw(bgImage, bgQuad, 0, 0)
+    bullets.draw()
+    player.draw()
+  end)
 
   if debug then
     local fps = tostring(love.timer.getFPS())
