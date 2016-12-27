@@ -20,7 +20,7 @@ function bullets.reset ()
   bulletList = {}
 end
 
-function bullets.update (dt)
+function bullets.move (dt)
   bullets.each(function (bullet, index)
     bullet.x = bullet.x + math.cos(bullet.rotation) * bulletSpeed * dt
     bullet.y = bullet.y + math.sin(bullet.rotation) * bulletSpeed * dt

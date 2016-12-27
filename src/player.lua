@@ -1,6 +1,8 @@
+local _ = require('src/common')
+
 local INITIAL_X = 300
 local INITIAL_Y = 300
-local CAN_SHOOT_TIMER_MAX = 0.2
+local CAN_SHOOT_TIMER_MAX = 0.5
 local ANGLE_ACCELERATION = 5
 local ACCELERATION = 100
 
@@ -40,7 +42,10 @@ function player.accelerateForward (dt)
   player.yvel = player.yvel + ACCELERATION * dt * math.sin(player.rotation)
 end
 
-function player.update (dt)
+function player.move (dt)
+  -- infinite world bounds for player
+  _.checkWorldBounds(player, player.img:getWidth(), player.img:getHeight())
+
   player.x = player.x + player.xvel * dt
   player.y = player.y + player.yvel * dt
   player.xvel = player.xvel * 0.99

@@ -1,19 +1,16 @@
-local debug = true
+local Camera = require('vendor/gamera')
+local _ = require('src/common')
+local player = require('src/player')
+local bullets = require('src/bullets')
 
-local Camera = require('./vendor/gamera')
-local player = require('./src/player')
-local bullets = require('./src/bullets')
-
-local WORLD_WIDTH = 2000
-local WORLD_HEIGHT = 2000
 local bgQuad, bgImage, camera
 
 function love.load ()
-  camera = Camera.new(0, 0, WORLD_WIDTH, WORLD_HEIGHT)
+  camera = Camera.new(0, 0, _.WORLD_WIDTH, _.WORLD_HEIGHT)
 
   bgImage = love.graphics.newImage('assets/stars-bg.png')
   bgImage:setWrap('repeat', 'repeat')
-  bgQuad = love.graphics.newQuad(0, 0, WORLD_WIDTH, WORLD_HEIGHT, bgImage:getWidth(), bgImage:getHeight())
+  bgQuad = love.graphics.newQuad(0, 0, _.WORLD_WIDTH, _.WORLD_HEIGHT, bgImage:getWidth(), bgImage:getHeight())
 
   player.loadAssets()
   bullets.loadAssets()
@@ -43,8 +40,8 @@ function love.update (dt)
     player.shoot()
   end
 
-  bullets.update(dt)
-  player.update(dt)
+  bullets.move(dt)
+  player.move(dt)
   camera:setPosition(player.x, player.y)
 end
 
@@ -55,13 +52,13 @@ function love.keypressed (key)
 end
 
 function love.draw ()
-  camera:draw(function ( ... )
+  camera:draw(function ()
     love.graphics.draw(bgImage, bgQuad, 0, 0)
     bullets.draw()
     player.draw()
   end)
 
-  if debug then
+  if _.debug then
     local fps = tostring(love.timer.getFPS())
     love.graphics.print('Current FPS: ' .. fps, 10, 10)
   end
