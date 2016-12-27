@@ -6,11 +6,11 @@ local bullets = require('src/bullets')
 local bgQuad, bgImage, camera
 
 function love.load ()
-  camera = Camera.new(0, 0, _.WORLD_WIDTH, _.WORLD_HEIGHT)
+  camera = Camera.new(_.WORLD_ORIGIN_X, _.WORLD_ORIGIN_Y, _.WORLD_WIDTH, _.WORLD_HEIGHT)
 
   bgImage = love.graphics.newImage('assets/stars-bg.png')
   bgImage:setWrap('repeat', 'repeat')
-  bgQuad = love.graphics.newQuad(0, 0, _.WORLD_WIDTH, _.WORLD_HEIGHT, bgImage:getWidth(), bgImage:getHeight())
+  bgQuad = love.graphics.newQuad(_.WORLD_ORIGIN_X, _.WORLD_ORIGIN_Y, _.WORLD_WIDTH, _.WORLD_HEIGHT, bgImage:getWidth(), bgImage:getHeight())
 
   player.loadAssets()
   bullets.loadAssets()
@@ -61,5 +61,6 @@ function love.draw ()
   if _.debug then
     local fps = tostring(love.timer.getFPS())
     love.graphics.print('Current FPS: ' .. fps, 10, 10)
+    love.graphics.print('Bulllets count: ' .. bullets.count(), 10, 25)
   end
 end

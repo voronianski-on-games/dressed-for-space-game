@@ -1,5 +1,7 @@
 local _ = {
-  debug = true,
+  debug = true, -- remove in production
+  WORLD_ORIGIN_X = 0,
+  WORLD_ORIGIN_Y = 0,
   WORLD_WIDTH = 2000,
   WORLD_HEIGHT = 2000
 }

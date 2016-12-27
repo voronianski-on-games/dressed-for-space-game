@@ -4,7 +4,7 @@ local INITIAL_X = 300
 local INITIAL_Y = 300
 local CAN_SHOOT_TIMER_MAX = 0.5
 local ANGLE_ACCELERATION = 5
-local ACCELERATION = 100
+local ACCELERATION = 150
 
 local canShootTimer = CAN_SHOOT_TIMER_MAX
 local shootSound = nil
