@@ -1,17 +1,23 @@
 local Camera = require('vendor/gamera')
+
 local _ = require('src/common')
 local player = require('src/player')
 local bullets = require('src/bullets')
+local shaders = require('src/shaders')
 
-local bgQuad, bgImage, camera
+local bgQuad, bgImage, camera, bgSong, postEffect
 
 function love.load ()
   camera = Camera.new(_.WORLD_ORIGIN_X, _.WORLD_ORIGIN_Y, _.WORLD_WIDTH, _.WORLD_HEIGHT)
 
-  bgImage = love.graphics.newImage('assets/stars-bg.png')
+  bgImage = love.graphics.newImage('assets/bg1.png')
   bgImage:setWrap('repeat', 'repeat')
   bgQuad = love.graphics.newQuad(_.WORLD_ORIGIN_X, _.WORLD_ORIGIN_Y, _.WORLD_WIDTH, _.WORLD_HEIGHT, bgImage:getWidth(), bgImage:getHeight())
 
+  bgSong = love.audio.newSource('assets/uoki_toki-king_of_my_castle.mp3', 'static')
+  bgSong:play()
+
+  shaders.load()
   player.loadAssets()
   bullets.loadAssets()
 end
@@ -52,10 +58,12 @@ function love.keypressed (key)
 end
 
 function love.draw ()
-  camera:draw(function ()
-    love.graphics.draw(bgImage, bgQuad, 0, 0)
-    bullets.draw()
-    player.draw()
+  shaders.postEffect():draw(function()
+    camera:draw(function ()
+      love.graphics.draw(bgImage, bgQuad, 0, 0)
+      bullets.draw()
+      player.draw()
+    end)
   end)
 
   if _.debug then

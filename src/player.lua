@@ -1,13 +1,13 @@
 local _ = require('src/common')
 
-local INITIAL_X = 300
-local INITIAL_Y = 300
+local INITIAL_X = _.WORLD_WIDTH / 2
+local INITIAL_Y = _.WORLD_HEIGHT / 2
 local CAN_SHOOT_TIMER_MAX = 0.5
 local ANGLE_ACCELERATION = 5
 local ACCELERATION = 150
 
 local canShootTimer = CAN_SHOOT_TIMER_MAX
-local shootSound = nil
+local shootSound
 local player = {
   x = INITIAL_X,
   y = INITIAL_Y,
