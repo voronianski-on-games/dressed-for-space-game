@@ -5,7 +5,7 @@ local player = require('src/player')
 local bullets = require('src/bullets')
 local shaders = require('src/shaders')
 
-local bgQuad, bgImage, camera, bgSong, postEffect
+local bgQuad, bgImage, camera, bgSong
 
 function love.load ()
   camera = Camera.new(_.WORLD_ORIGIN_X, _.WORLD_ORIGIN_Y, _.WORLD_WIDTH, _.WORLD_HEIGHT)
@@ -15,7 +15,7 @@ function love.load ()
   bgQuad = love.graphics.newQuad(_.WORLD_ORIGIN_X, _.WORLD_ORIGIN_Y, _.WORLD_WIDTH, _.WORLD_HEIGHT, bgImage:getWidth(), bgImage:getHeight())
 
   bgSong = love.audio.newSource('assets/uoki_toki-king_of_my_castle.mp3', 'static')
-  bgSong:play()
+  -- bgSong:play()
 
   shaders.load()
   player.loadAssets()
