@@ -18,8 +18,9 @@ function static.loadBackgroundImage ()
 end
 
 function static.playBackgroundPlaylist ()
+  -- more songs in background
   bgSong = love.audio.newSource('assets/uoki_toki-king_of_my_castle.mp3', 'static')
-  bgSong:play()
+  -- bgSong:play()
 end
 
 function static.loadImageFont ()

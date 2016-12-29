@@ -4,7 +4,7 @@ local INITIAL_X = _.WORLD_WIDTH / 2
 local INITIAL_Y = _.WORLD_HEIGHT / 2
 local CAN_SHOOT_TIMER_MAX = 0.5
 local ANGLE_ACCELERATION = 5
-local ACCELERATION = 150
+local ACCELERATION = 200
 
 local canShootTimer = CAN_SHOOT_TIMER_MAX
 local shootSound
@@ -14,7 +14,6 @@ local player = {
   xvel = 0,
   yvel = 0,
   img = nil,
-  speed = 300,
   rotation = 0,
   canShoot = true
 };
