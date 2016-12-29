@@ -1,12 +1,11 @@
-local Camera = require('vendor/gamera')
-
 local _ = require('src/common')
+local Camera = require('src/camera')
 local player = require('src/player')
 local bullets = require('src/bullets')
 local static = require('src/static')
 local shaders = require('src/shaders')
 
-local camera = Camera.new(_.WORLD_ORIGIN_X, _.WORLD_ORIGIN_Y, _.WORLD_WIDTH, _.WORLD_HEIGHT)
+local camera, space
 
 function love.load ()
   static.loadImageFont()
@@ -16,6 +15,8 @@ function love.load ()
   shaders.load()
   player.loadAssets()
   bullets.loadAssets()
+
+  camera = Camera.create()
 end
 
 function love.update (dt)

@@ -7,11 +7,11 @@ local _ = {
 }
 
 -- mutating object
-function _.checkWorldBounds (obj, width, height)
-  local minX = -width / 2
-  local minY = -height / 2
-  local maxX = _.WORLD_WIDTH + width / 2
-  local maxY = _.WORLD_HEIGHT + height / 2
+function _.checkWorldBounds (obj)
+  local minX = -obj.width / 2
+  local minY = -obj.height / 2
+  local maxX = _.WORLD_WIDTH + obj.width / 2
+  local maxY = _.WORLD_HEIGHT + obj.height / 2
 
   if obj.x < minX then
     obj.x = maxX

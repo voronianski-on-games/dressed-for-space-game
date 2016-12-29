@@ -1,19 +1,24 @@
+local lume = require('vendor/lume')
 local _ = require('src/common')
 
 local bullets = {}
 
-local bulletImg = nil
-local bulletSpeed = 300
+local bulletImage = nil
+local bulletSpeed = 500
+local bulletScale = 0.6
 local bulletList = {}
 
 function bullets.loadAssets ()
-  bulletImg = love.graphics.newImage('assets/bullet.png')
+  bulletImage = love.graphics.newImage('assets/bullet.png')
 end
 
 function bullets.create (player)
   table.insert(bulletList, {
-    x = player.x, -- + (player.img:getWidth() / 2),
+    id = lume.uuid(),
+    x = player.x,
     y = player.y,
+    width = bulletImage:getWidth(),
+    height = bulletImage:getHeight(),
     rotation = player.rotation
   })
 end
@@ -47,7 +52,7 @@ end
 
 function bullets.draw (playerRotation)
   bullets.each(function (bullet)
-    love.graphics.draw(bulletImg, bullet.x, bullet.y, bullet.rotation, 0.6, 0.6, bulletImg:getWidth() / 2, bulletImg:getHeight() / 2)
+    love.graphics.draw(bulletImage, bullet.x, bullet.y, bullet.rotation, bulletScale, bulletScale, bullet.width / 2, bullet.height / 2)
   end)
 end
 
