@@ -3,7 +3,8 @@ local _ = {
   WORLD_ORIGIN_X = 0,
   WORLD_ORIGIN_Y = 0,
   WORLD_WIDTH = 3000,
-  WORLD_HEIGHT = 3000
+  WORLD_HEIGHT = 3000,
+  UPDATE_RADIUS = 100 -- how "far away from the camera" things stop being updated
 }
 
 -- mutating object

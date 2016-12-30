@@ -1,9 +1,9 @@
 local _ = require('src/common')
 
-local static = {}
+local media = {}
 local bgImage, bgQuad, bgSong, imageFont
 
-function static.loadBackgroundImage ()
+function media.loadBackgroundImage ()
   bgImage = love.graphics.newImage('assets/bg1.png')
   bgImage:setWrap('repeat', 'repeat')
 
@@ -17,13 +17,13 @@ function static.loadBackgroundImage ()
   )
 end
 
-function static.playBackgroundPlaylist ()
+function media.playBackgroundPlaylist ()
   -- more songs in background
   bgSong = love.audio.newSource('assets/uoki_toki-king_of_my_castle.mp3', 'static')
   -- bgSong:play()
 end
 
-function static.loadImageFont ()
+function media.loadImageFont ()
   imageFont = love.graphics.newImageFont(
     'assets/imagefont.png',
     ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`\'*#=[]"'
@@ -31,8 +31,8 @@ function static.loadImageFont ()
   love.graphics.setFont(imageFont)
 end
 
-function static.drawBackgroundImage ()
+function media.drawBackgroundImage ()
   love.graphics.draw(bgImage, bgQuad, 0, 0)
 end
 
-return static
+return media
