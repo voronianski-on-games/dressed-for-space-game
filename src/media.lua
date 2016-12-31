@@ -18,7 +18,7 @@ function media.loadBackgroundImage ()
 end
 
 function media.playBackgroundPlaylist ()
-  -- more songs in background
+  -- TBD: more songs in background
   bgSong = love.audio.newSource('assets/uoki_toki-king_of_my_castle.mp3', 'static')
   -- bgSong:play()
 end

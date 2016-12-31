@@ -29,6 +29,8 @@ function Map:update (dt, x, y, width, height)
   local height = height or self.height
   local visibles, len = self.world:queryRect(x, y, width, height)
 
+  table.sort(visibles, _.sortByUpdateOrder)
+
   for i = 1, len do
     visibles[i]:update(dt)
   end
@@ -36,7 +38,8 @@ end
 
 function Map:draw (x, y, width, height)
   local visibles, len = self.world:queryRect(x, y, width, height)
-  print('map draw', x, y, width, height, len)
+  -- print('map draw', x, y, width, height, len)
+  table.sort(visibles, _.sortByDrawOrder)
 
   for i = 1, len do
     visibles[i]:draw()

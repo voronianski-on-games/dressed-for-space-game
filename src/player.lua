@@ -14,6 +14,9 @@ local shootSound
 
 local Player = Entity:extend()
 
+Player.drawOrder = 2
+Player.updateOrder = 1
+
 function Player.loadAssets ()
   shootSound = love.audio.newSource('assets/player_shoot.wav', 'static')
   playerImage = love.graphics.newImage('assets/player.png')
@@ -92,14 +95,18 @@ function Player:accelerateForward (dt)
   self.yvel = self.yvel + acceleration * dt * math.sin(self.rotation)
 end
 
+function Player:collisionFilter (item, other)
+  -- if other:is(Bullet) then
+  return false
+end
+
 function Player:move (dt)
+  -- infinite world bounds for player
   _.checkWorldBounds(self)
 
   local futureX = self.x + self.xvel * dt
   local futureY = self.y + self.yvel * dt
-  local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY)
-
-  -- infinite world bounds for player
+  local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY, self.collisionFilter)
 
   self.x = nextX
   self.y = nextY

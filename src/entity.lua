@@ -24,4 +24,12 @@ function Entity:destroy ()
   self.world:remove(self)
 end
 
+function Entity:getDrawOrder ()
+  return self.drawOrder or self.createdAt
+end
+
+function Entity:getUpdateOrder ()
+  return self.updateOrder or 10000
+end
+
 return Entity

@@ -17,7 +17,7 @@ function love.load ()
   Player.loadAssets()
   Bullet.loadAssets()
 
-  camera = Camera.create()
+  camera = Camera()
   map = Map(camera)
 end
 
@@ -61,6 +61,6 @@ function love.draw ()
     local w, h = love.graphics.getDimensions()
     local stats = ('fps: %d, mem: %dKB, items: %d'):format(love.timer.getFPS(), collectgarbage('count'), map:countItems())
 
-    love.graphics.printf(stats, w - 300, h - 20, 300, 'right')
+    love.graphics.print(stats, 5, h - 20)
   end
 end

@@ -8,25 +8,29 @@ local bulletScale = 0.6
 
 local Bullet = Entity:extend()
 
+Bullet.drawOrder = 1
+Bullet.updateOrder = 2
+
 function Bullet.loadAssets ()
   bulletImage = love.graphics.newImage('assets/bullet.png')
 end
 
-function Bullet:new (playerData)
-  Bullet.super.new(self, lume.extend(playerData, {
+function Bullet:new (data)
+  Bullet.super.new(self, lume.extend(data, {
     width = bulletImage:getWidth(),
     height = bulletImage:getHeight()
   }))
 end
 
-function Bullet:filter (other)
-
+function Bullet:collisionFilter (item, other)
+  -- if other:is(Player) then
+  return false
 end
 
 function Bullet:update (dt)
   local futureX = self.x + math.cos(self.rotation) * bulletSpeed * dt
   local futureY = self.y + math.sin(self.rotation) * bulletSpeed * dt
-  local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY)
+  local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY, self.collisionFilter)
 
   for i = 1, len do
     print(collisions[i])

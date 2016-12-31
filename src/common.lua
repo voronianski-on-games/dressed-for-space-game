@@ -27,4 +27,12 @@ function _.checkWorldBounds (obj)
   end
 end
 
+function _.sortByDrawOrder (a, b)
+  return a:getDrawOrder() < b:getDrawOrder()
+end
+
+function _.sortByUpdateOrder (a, b)
+  return a:getUpdateOrder() < b:getUpdateOrder()
+end
+
 return _
