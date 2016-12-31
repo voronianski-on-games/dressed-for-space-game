@@ -2,6 +2,7 @@ local bump = require('vendor/bump')
 local Object = require('vendor/object')
 local _ = require('src/common')
 local Player = require('src/player')
+local Enemy = require('src/enemy')
 
 local Map = Object:extend()
 
@@ -20,9 +21,17 @@ function Map:reset ()
     world = self.world,
     camera = self.camera
   })
+
+  Enemy({
+    x = 1800,
+    y = 1800,
+    world = self.world,
+    camera = self.camera
+  })
 end
 
 function Map:update (dt, x, y, width, height)
+  -- update only visible
   local x = x or self.x
   local y = y or self.y
   local width = width or self.width
@@ -38,7 +47,7 @@ end
 
 function Map:draw (x, y, width, height)
   local visibles, len = self.world:queryRect(x, y, width, height)
-  -- print('map draw', x, y, width, height, len)
+
   table.sort(visibles, _.sortByDrawOrder)
 
   for i = 1, len do
