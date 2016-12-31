@@ -39,7 +39,7 @@ function Bullet:update (dt)
   self.x = nextX
   self.y = nextY
 
-  -- clean bullets when they are out of world bounds
+  -- clean bullets when they are out of visible world bounds
   local x, y, width, height = self.camera:getVisible()
 
   if self.x > x + width or self.x < x or self.y > y + height or self.y < y then
