@@ -17,13 +17,17 @@ end
 
 function Bullet:new (data)
   Bullet.super.new(self, lume.extend(data, {
+    kind = 'bullet',
     width = bulletImage:getWidth(),
     height = bulletImage:getHeight()
   }))
 end
 
-function Bullet:collisionFilter (item, other)
-  -- if other:is(Player) then
+function Bullet:collisionFilter (other)
+  if other.kind == 'enemy' then
+    return 'touch'
+  end
+
   return false
 end
 
@@ -34,6 +38,11 @@ function Bullet:update (dt)
 
   for i = 1, len do
     print(collisions[i])
+    local other = collisions[i].other
+
+    if other.kind == 'enemy' then
+      self:destroy()
+    end
   end
 
   self.x = nextX

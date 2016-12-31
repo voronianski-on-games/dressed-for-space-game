@@ -3,7 +3,7 @@ local _ = require('src/common')
 local Entity = require('src/entity')
 
 local enemyImage = nil
-local enemyScale = 0.8
+local enemyScale = 1
 
 local Enemy = Entity:extend()
 
@@ -13,6 +13,7 @@ end
 
 function Enemy:new (data)
   Enemy.super.new(self, lume.extend(data, {
+    kind = 'enemy',
     width = enemyImage:getWidth(),
     height = enemyImage:getHeight()
   }))

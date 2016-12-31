@@ -15,6 +15,7 @@ function Entity:new (data)
   self.xvel = data.xvel or 0
   self.yvel = data.yvel or 0
   self.rotation = data.rotation or 0
+  self.kind = data.kind or 'entity'
 
   self.world:add(self, self.x, self.y, self.width, self.height)
   self.createdAt = love.timer.getTime()

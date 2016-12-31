@@ -24,6 +24,7 @@ end
 
 function Player:new (data)
   Player.super.new(self, lume.extend(data, {
+    kind = 'player',
     x = initialX,
     y = initialY,
     width = playerImage:getWidth(),
