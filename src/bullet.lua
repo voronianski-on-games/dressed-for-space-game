@@ -40,12 +40,9 @@ function Bullet:update (dt)
   self.y = nextY
 
   -- clean bullets when they are out of world bounds
-  -- local x, y, width, height = self.camera:getVisible()
+  local x, y, width, height = self.camera:getVisible()
 
-  -- if self.x > width or self.x < x or self.y > height or self.y < y then
-  --   self:destroy()
-  -- end
-  if self.x > _.WORLD_WIDTH or self.x < _.WORLD_ORIGIN_X or self.y > _.WORLD_HEIGHT or self.y < _.WORLD_ORIGIN_Y then
+  if self.x > x + width or self.x < x or self.y > y + height or self.y < y then
     self:destroy()
   end
 end

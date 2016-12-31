@@ -66,7 +66,7 @@ function Player:update (dt)
       camera = self.camera
     })
 
-    -- self.camera:shake(5)
+    -- self.camera:shake(2)
     self:shoot()
   end
 
