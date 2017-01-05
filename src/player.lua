@@ -3,14 +3,12 @@ local _ = require('src/common')
 local Entity = require('src/entity')
 local Bullet = require('src/bullet')
 
-local initialX = _.WORLD_WIDTH / 2
-local initialY = _.WORLD_HEIGHT / 2
 local canShootTimerMax = 0.5
 local angleAcceleration = 5
 local acceleration = 200
 local playerScale = 1
-local playerImage
-local shootSound
+local playerImage = nil
+local shootSound = nil
 
 local Player = Entity:extend()
 
@@ -25,10 +23,7 @@ end
 function Player:new (data)
   Player.super.new(self, lume.extend(data, {
     kind = 'player',
-    x = initialX,
-    y = initialY,
-    width = playerImage:getWidth(),
-    height = playerImage:getHeight()
+    image = playerImage
   }))
 
   self.canShootTimer = canShootTimerMax
@@ -59,9 +54,11 @@ function Player:update (dt)
   end
 
   if (love.keyboard.isDown('x') or love.keyboard.isDown('space')) and self.canShoot then
+    local center = self:getCenter()
+
     Bullet({
-      x = self.x,
-      y = self.y,
+      x = center.x,
+      y = center.y,
       rotation = self.rotation,
       world = self.world,
       camera = self.camera
@@ -72,10 +69,6 @@ function Player:update (dt)
   end
 
   self:move(dt)
-end
-
-function Player:draw ()
-  love.graphics.draw(playerImage, self.x, self.y, self.rotation, playerScale, playerScale, self.width / 2, self.height / 2)
 end
 
 function Player:rotateLeft (dt)

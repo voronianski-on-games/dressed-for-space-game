@@ -16,15 +16,20 @@ function Map:reset ()
   self.y = _.WORLD_ORIGIN_Y
   self.width = _.WORLD_WIDTH
   self.height = _.WORLD_HEIGHT
+
   self.world = bump.newWorld()
+
   self.player = Player({
+    x = self.width / 2,
+    y = self.height / 2,
     world = self.world,
     camera = self.camera
   })
 
+  -- enemies positions should be generated
   Enemy({
-    x = 1800,
-    y = 1800,
+    x = 1600,
+    y = 1600,
     world = self.world,
     camera = self.camera
   })
@@ -41,7 +46,9 @@ function Map:update (dt, x, y, width, height)
   table.sort(visibles, _.sortByUpdateOrder)
 
   for i = 1, len do
-    visibles[i]:update(dt)
+    local entity = visibles[i]
+
+    entity:update(dt)
   end
 end
 
@@ -51,7 +58,13 @@ function Map:draw (x, y, width, height)
   table.sort(visibles, _.sortByDrawOrder)
 
   for i = 1, len do
-    visibles[i]:draw()
+    local entity = visibles[i]
+
+    entity:draw()
+
+    if _.debugEntities then
+      entity:drawBounds()
+    end
   end
 end
 

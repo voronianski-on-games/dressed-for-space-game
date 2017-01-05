@@ -2,9 +2,8 @@ local lume = require('vendor/lume')
 local _ = require('src/common')
 local Entity = require('src/entity')
 
-local bulletImage = nil
 local bulletSpeed = 500
-local bulletScale = 0.6
+local bulletImage = nil
 
 local Bullet = Entity:extend()
 
@@ -18,8 +17,8 @@ end
 function Bullet:new (data)
   Bullet.super.new(self, lume.extend(data, {
     kind = 'bullet',
-    width = bulletImage:getWidth(),
-    height = bulletImage:getHeight()
+    -- scale = 0.6,
+    image = bulletImage
   }))
 end
 
@@ -37,11 +36,11 @@ function Bullet:update (dt)
   local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY, self.collisionFilter)
 
   for i = 1, len do
-    print(collisions[i])
+    -- print(collisions[i])
     local other = collisions[i].other
 
     if other.kind == 'enemy' then
-      self:destroy()
+      -- self:destroy()
     end
   end
 
@@ -54,10 +53,6 @@ function Bullet:update (dt)
   if self.x > x + width or self.x < x or self.y > y + height or self.y < y then
     self:destroy()
   end
-end
-
-function Bullet:draw ()
-  love.graphics.draw(bulletImage, self.x, self.y, self.rotation, bulletScale, bulletScale, self.width / 2, self.height / 2)
 end
 
 return Bullet

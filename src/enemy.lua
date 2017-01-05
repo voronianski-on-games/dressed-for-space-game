@@ -3,7 +3,6 @@ local _ = require('src/common')
 local Entity = require('src/entity')
 
 local enemyImage = nil
-local enemyScale = 1
 
 local Enemy = Entity:extend()
 
@@ -14,8 +13,7 @@ end
 function Enemy:new (data)
   Enemy.super.new(self, lume.extend(data, {
     kind = 'enemy',
-    width = enemyImage:getWidth(),
-    height = enemyImage:getHeight()
+    image = enemyImage
   }))
 end
 
@@ -35,10 +33,6 @@ function Enemy:move (dt)
   self.y = nextY
   self.xvel = self.xvel * 0.99
   self.yvel = self.yvel * 0.99
-end
-
-function Enemy:draw ()
-  love.graphics.draw(enemyImage, self.x, self.y, self.rotation, enemyScale, enemyScale, self.width / 2, self.height / 2)
 end
 
 return Enemy
