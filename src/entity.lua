@@ -8,14 +8,15 @@ function Entity:new (data)
   self.world = data.world
   self.camera = data.camera
   self.image = data.image
-  self.width = self.image:getWidth()
-  self.height = self.image:getHeight()
+  self.width = data.width or self.image:getWidth()
+  self.height = data.height or self.image:getHeight()
 
   self.x = data.x or 0
   self.y = data.y or 0
   self.xvel = data.xvel or 0
   self.yvel = data.yvel or 0
-  self.scale = data.scale or 1
+  self.xscale = data.scale or data.xscale or 1
+  self.yscale = data.scale or data.yscale or 1
   self.rotation = data.rotation or 0
   self.kind = data.kind or 'entity'
 
@@ -54,13 +55,16 @@ function Entity:draw ()
     self.image,
     center.x, center.y,
     self.rotation,
-    self.scale, self.scale,
+    self.xscale, self.yscale,
     center.ox, center.oy
   )
 end
 
 function Entity:drawBounds ()
+  local center = self:getCenter()
+
   love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
+  love.graphics.rectangle('line', center.x, center.y, self.width, self.height)
 end
 
 return Entity

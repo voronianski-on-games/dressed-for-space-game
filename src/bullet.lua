@@ -17,7 +17,6 @@ end
 function Bullet:new (data)
   Bullet.super.new(self, lume.extend(data, {
     kind = 'bullet',
-    -- scale = 0.6,
     image = bulletImage
   }))
 end
@@ -40,7 +39,7 @@ function Bullet:update (dt)
     local other = collisions[i].other
 
     if other.kind == 'enemy' then
-      -- self:destroy()
+      self:destroy()
     end
   end
 

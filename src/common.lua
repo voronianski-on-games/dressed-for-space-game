@@ -1,7 +1,7 @@
 local _ = {
   -- disable in production
   debug = true,
-  debugEntities = true,
+  debugEntities = false,
 
   WORLD_ORIGIN_X = 0,
   WORLD_ORIGIN_Y = 0,
@@ -36,6 +36,16 @@ end
 
 function _.sortByUpdateOrder (a, b)
   return a:getUpdateOrder() < b:getUpdateOrder()
+end
+
+function _.getImageScaleForDimensions (image, newWidth, newHeight)
+  local width = image:getWidth()
+  local height = image:getHeight()
+
+  return {
+    x = newWidth / width,
+    y = newHeight / height
+  }
 end
 
 return _

@@ -13,12 +13,26 @@ end
 function Enemy:new (data)
   Enemy.super.new(self, lume.extend(data, {
     kind = 'enemy',
-    image = enemyImage
+    image = enemyImage,
+    width = 36,
+    height = 36
   }))
 end
 
 function Enemy:update (dt)
   self:move(dt)
+end
+
+function Enemy:draw ()
+  local center = self:getCenter()
+
+  love.graphics.draw(
+    self.image,
+    center.x, center.y,
+    self.rotation,
+    self.xscale, self.yscale,
+    center.ox + 6, center.oy + 14
+  )
 end
 
 function Enemy:collisionFilter ()
