@@ -5,6 +5,7 @@ local Camera = require('src/camera')
 local Player = require('src/player')
 local Bullet = require('src/bullet')
 local Enemy = require('src/enemy')
+local Explosion = require('src/explosion')
 local shaders = require('src/shaders')
 
 local camera, map
@@ -20,6 +21,7 @@ function love.load ()
   Player.loadAssets()
   Bullet.loadAssets()
   Enemy.loadAssets()
+  Explosion.loadAssets()
 
   camera = Camera()
   map = Map(camera)

@@ -25,8 +25,6 @@ function Bullet:collisionFilter (other)
   if other.kind == 'enemy' then
     return 'touch'
   end
-
-  return false
 end
 
 function Bullet:update (dt)
@@ -35,10 +33,10 @@ function Bullet:update (dt)
   local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY, self.collisionFilter)
 
   for i = 1, len do
-    -- print(collisions[i])
     local other = collisions[i].other
 
     if other.kind == 'enemy' then
+      other:damage()
       self:destroy()
     end
   end
