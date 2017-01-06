@@ -1,3 +1,5 @@
+local inspect = require('vendor/inspect')
+
 local _ = {
   -- disable in production
   debug = true,
@@ -46,6 +48,15 @@ function _.getImageScaleForDimensions (image, newWidth, newHeight)
     x = newWidth / width,
     y = newHeight / height
   }
+end
+
+function _.print (...)
+  print(inspect(...))
+end
+
+-- global shorthand in development
+if _.debug then
+  _G.p = _.print
 end
 
 return _

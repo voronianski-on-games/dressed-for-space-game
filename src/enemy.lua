@@ -30,7 +30,6 @@ function Enemy:new (data)
 end
 
 function Enemy:collisionFilter (other)
-    -- print('filter', other.kind)
   -- if other.kind == 'bullet' then
   --   return 'touch'
   -- end
