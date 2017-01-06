@@ -3,7 +3,7 @@ local _ = require('src/common')
 local Entity = require('src/entity')
 local Explosion = require('src/explosion')
 
-local acceleration = 100
+local acceleration = 50
 local enemyImage = nil
 local damageSound = nil
 local deathSound = nil
@@ -38,8 +38,11 @@ function Enemy:collisionFilter (other)
 end
 
 function Enemy:update (dt)
+  -- demo movement
   self.xvel = self.xvel + acceleration * dt * math.cos(self.rotation)
   self.yvel = self.yvel + acceleration * dt * math.sin(self.rotation)
+
+  _.checkWorldBounds(self)
 
   local futureX = self.x + self.xvel * dt
   local futureY = self.y + self.yvel * dt
@@ -78,6 +81,8 @@ end
 
 function Enemy:damage ()
   damageSound:play()
+
+  self.camera:shake(2)
   self.healthPoints = self.healthPoints - 1
 
   if self.healthPoints <= 0 then

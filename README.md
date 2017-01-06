@@ -6,6 +6,8 @@
 
 <img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demo1.gif" width="300">
 
+<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demo2.gif" width="300">
+
 ## Development
 
 - install love app from https://www.love2d.org
