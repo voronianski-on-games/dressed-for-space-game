@@ -36,7 +36,6 @@ function Bullet:update (dt)
     local other = collisions[i].other
 
     if other.kind == 'enemy' then
-
       other:damage()
       self:destroy()
     end

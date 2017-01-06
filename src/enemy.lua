@@ -3,6 +3,7 @@ local _ = require('src/common')
 local Entity = require('src/entity')
 local Explosion = require('src/explosion')
 
+local acceleration = 100
 local enemyImage = nil
 local damageSound = nil
 local deathSound = nil
@@ -37,6 +38,9 @@ function Enemy:collisionFilter (other)
 end
 
 function Enemy:update (dt)
+  self.xvel = self.xvel + acceleration * dt * math.cos(self.rotation)
+  self.yvel = self.yvel + acceleration * dt * math.sin(self.rotation)
+
   local futureX = self.x + self.xvel * dt
   local futureY = self.y + self.yvel * dt
   local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY, self.collisionFilter)
