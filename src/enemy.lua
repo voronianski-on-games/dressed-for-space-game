@@ -27,6 +27,7 @@ function Enemy:new (data)
     height = 36
   }))
 
+  self.player = data.player
   self.healthPoints = 5
 end
 
@@ -37,29 +38,29 @@ function Enemy:collisionFilter (other)
   -- return other.kind == 'bullet'
 end
 
+function Enemy:seek ()
+  local dx = self.player.x - self.x - self.xvel
+  local dy = self.player.y - self.y - self.yvel
+
+  -- normalize
+  local len = math.sqrt(dx*dx + dy*dy)
+  dx,dy = dx / len, dy / len
+
+  return dx, dy
+end
+
 function Enemy:update (dt)
-  -- demo movement
-  self.xvel = self.xvel + acceleration * dt * math.cos(self.rotation)
-  self.yvel = self.yvel + acceleration * dt * math.sin(self.rotation)
+  local dx, dy = self:seek()
+
+  -- self.rotation = math.atan2(dx, dy) + 5 * dt
+  self.xvel = self.xvel + dx * 100 * dt -- * math.cos(self.rotation)
+  self.yvel = self.yvel + dy * 100 * dt -- * math.sin(self.rotation)
 
   _.checkWorldBounds(self)
 
   local futureX = self.x + self.xvel * dt
   local futureY = self.y + self.yvel * dt
   local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY, self.collisionFilter)
-
-  -- print('enemy update', len)
-
-  -- for i = 1, len do
-    -- local other = collisions[i].other
-
-    -- print('collide', other.kind)
-    -- if self.healthPoints <= 0 then
-      -- self:die()
-    -- else
-      -- self:damage()
-    -- end
-  -- end
 
   self.x = nextX
   self.y = nextY

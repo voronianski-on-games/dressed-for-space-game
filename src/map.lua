@@ -30,6 +30,8 @@ function Map:reset ()
   Enemy({
     x = 1600,
     y = 1600,
+    rotation = 1,
+    player = self.player,
     world = self.world,
     camera = self.camera
   })
