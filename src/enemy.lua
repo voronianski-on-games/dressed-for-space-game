@@ -99,7 +99,6 @@ function Enemy:move (dt)
   local futureY = self.y + self.yvel * dt
   local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY, self.collisionFilter)
 
-  print(nextX, nextY)
   self.x = nextX
   self.y = nextY
   self.xvel = self.xvel * 0.99
