@@ -11,7 +11,7 @@ local shaders = require('src/shaders')
 local camera, map
 
 function love.load ()
-  -- love.mouse.setVisible(false)
+  love.mouse.setVisible(false)
 
   shaders.load()
   media.loadImageFonts()
