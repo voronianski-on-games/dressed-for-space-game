@@ -11,10 +11,10 @@ local shaders = require('src/shaders')
 local camera, map
 
 function love.load ()
-  love.mouse.setVisible(false)
+  -- love.mouse.setVisible(false)
 
   shaders.load()
-  media.loadImageFont()
+  media.loadImageFonts()
   media.loadBackgroundImage()
   media.playBackgroundPlaylist()
 
@@ -56,17 +56,22 @@ function love.keypressed (key)
 end
 
 function love.draw ()
+  local w, h = love.graphics.getDimensions()
+
   shaders.postEffect():draw(function ()
     camera:draw(function (x, y, width, height)
       media.drawBackgroundImage()
       map:draw(x, y, width, height)
     end)
+
+    love.graphics.setFont(media.imageFontTitle)
+    love.graphics.print('DRESSED FOR SPACE', w / 2 - 260, 100)
+
+    if _.debug then
+      local stats = ('fps: %d, mem: %dKB, items: %d'):format(love.timer.getFPS(), collectgarbage('count'), map:countItems())
+
+      love.graphics.setFont(media.imageFontLowercase)
+      love.graphics.print(stats, 5, h - 20)
+    end
   end)
-
-  if _.debug then
-    local w, h = love.graphics.getDimensions()
-    local stats = ('fps: %d, mem: %dKB, items: %d'):format(love.timer.getFPS(), collectgarbage('count'), map:countItems())
-
-    love.graphics.print(stats, 5, h - 20)
-  end
 end

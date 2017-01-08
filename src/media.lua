@@ -23,12 +23,19 @@ function media.playBackgroundPlaylist ()
   -- bgSong:play()
 end
 
-function media.loadImageFont ()
-  imageFont = love.graphics.newImageFont(
+function media.loadImageFonts ()
+  media.imageFont = love.graphics.newImageFont(
     'assets/imagefont.png',
     ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`\'*#=[]"'
   )
-  love.graphics.setFont(imageFont)
+  media.imageFontTitle = love.graphics.newImageFont(
+    'assets/imagefont_title.png',
+    ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  )
+  media.imageFontLowercase = love.graphics.newImageFont(
+    'assets/imagefont_lowercase.png',
+    ' abcdefghijklmnopqrstuvwxyz[/]^_/0123456789:;<=!"#$%&\'()*+,-.>?@'
+  )
 end
 
 function media.drawBackgroundImage ()

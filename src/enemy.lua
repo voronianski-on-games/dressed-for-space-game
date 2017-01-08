@@ -3,7 +3,6 @@ local _ = require('src/common')
 local Entity = require('src/entity')
 local Explosion = require('src/explosion')
 
-local acceleration = 50
 local enemyImage = nil
 local damageSound = nil
 local deathSound = nil
@@ -29,46 +28,90 @@ function Enemy:new (data)
 
   self.player = data.player
   self.healthPoints = 5
+  self.seekForce = 5
+  self.maxSpeed = 250
 end
 
 function Enemy:collisionFilter (other)
-  -- if other.kind == 'bullet' then
-  --   return 'touch'
-  -- end
-  -- return other.kind == 'bullet'
 end
 
 function Enemy:seek ()
-  local dx = self.player.x - self.x - self.xvel
-  local dy = self.player.y - self.y - self.yvel
+  local dx = self.player.x - self.x
+  local dy = self.player.y - self.y
+  local desired = _.normalizeVector(dx, dy)
 
-  -- normalize
-  local len = math.sqrt(dx*dx + dy*dy)
-  dx,dy = dx / len, dy / len
+  desired.x = desired.x * self.maxSpeed
+  desired.y = desired.y * self.maxSpeed
 
-  return dx, dy
+  self:rotateToPlayer(desired.x, desired.y)
+  return self:calculateSteer(desired.x, desired.y)
 end
 
-function Enemy:update (dt)
-  local dx, dy = self:seek()
+function Enemy:seekWithApproach ()
+  local dx = self.player.x - self.x
+  local dy = self.player.y - self.y
+  local distance = _.getVectorLength(dx, dy)
+  local desired = _.normalizeVector(dx, dy)
 
-  -- self.rotation = math.atan2(dx, dy) + 5 * dt
-  self.xvel = self.xvel + dx * 100 * dt -- * math.cos(self.rotation)
-  self.yvel = self.yvel + dy * 100 * dt -- * math.sin(self.rotation)
+  -- slowdown when come closer to player
+  if distance < self.player.approachRadius then
+    desired.x = desired.x * distance / self.player.approachRadius * self.maxSpeed
+    desired.y = desired.y * distance / self.player.approachRadius * self.maxSpeed
+  else
+    desired.x = desired.x * self.maxSpeed
+    desired.y = desired.y * self.maxSpeed
+  end
 
-  _.checkWorldBounds(self)
+  self:rotateToPlayer(desired.x, desired.y)
+  return self:calculateSteer(desired.x, desired.y)
+end
+
+function Enemy:calculateSteer (dx, dy)
+  local steer = {
+    x = dx - self.xvel,
+    y = dy - self.yvel
+  }
+
+  if _.getVectorLength(steer.x, steer.y) > self.seekForce then
+    steer.x = steer.x * self.seekForce
+    steer.y = steer.y * self.seekForce
+  end
+
+  return steer
+end
+
+function Enemy:rotateToPlayer (dx, dy)
+  self.rotation = math.atan2(dy, dx)
+end
+
+function Enemy:accelerate (dt)
+  -- steering behavior - seek player
+  local acceleration = self:seekWithApproach()
+
+  self.xvel = self.xvel + acceleration.x * dt
+  self.yvel = self.yvel + acceleration.y * dt
+end
+
+function Enemy:move (dt)
+  self:checkWorldBounds()
 
   local futureX = self.x + self.xvel * dt
   local futureY = self.y + self.yvel * dt
   local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY, self.collisionFilter)
 
+  print(nextX, nextY)
   self.x = nextX
   self.y = nextY
   self.xvel = self.xvel * 0.99
   self.yvel = self.yvel * 0.99
 end
 
-function Enemy:draw ()
+function Enemy:update (dt)
+  self:accelerate(dt)
+  self:move(dt)
+end
+
+function Enemy:draw (lx, ly)
   local center = self:getCenter()
 
   love.graphics.draw(

@@ -1,4 +1,5 @@
 local Object = require('vendor/object')
+local _ = require('src/common')
 
 local Entity = Object:extend()
 
@@ -48,6 +49,26 @@ function Entity:getCenter ()
   }
 end
 
+-- infinite world bounds for entity
+function Entity:checkWorldBounds ( ... )
+  local minX = -self.width / 2
+  local minY = -self.height / 2
+  local maxX = _.WORLD_WIDTH + self.width / 2
+  local maxY = _.WORLD_HEIGHT + self.height / 2
+
+  if self.x < minX then
+    self.x = maxX
+  elseif self.x > maxX then
+    self.x = minX
+  end
+
+  if self.y < minY then
+    self.y = maxY
+  elseif self.y > maxY then
+    self.y = minY
+  end
+end
+
 function Entity:draw ()
   local center = self:getCenter()
 
@@ -60,11 +81,16 @@ function Entity:draw ()
   )
 end
 
-function Entity:drawBounds ()
+-- used in debug only
+function Entity:drawBounds (lx, ly)
   local center = self:getCenter()
 
   love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
   love.graphics.rectangle('line', center.x, center.y, self.width, self.height)
+
+  if self.approachRadius then
+    love.graphics.circle('line', center.x, center.y, self.approachRadius)
+  end
 end
 
 return Entity

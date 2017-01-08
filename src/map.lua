@@ -28,9 +28,8 @@ function Map:reset ()
 
   -- enemies positions should be generated
   Enemy({
-    x = 1600,
-    y = 1600,
-    rotation = 1,
+    x = 1200,
+    y = 1200,
     player = self.player,
     world = self.world,
     camera = self.camera
@@ -62,10 +61,10 @@ function Map:draw (x, y, width, height)
   for i = 1, len do
     local entity = visibles[i]
 
-    entity:draw()
+    entity:draw(x, y, width, height)
 
     if _.debugEntities then
-      entity:drawBounds()
+      entity:drawBounds(x, y, width, height)
     end
   end
 end

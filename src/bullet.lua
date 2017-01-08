@@ -19,6 +19,8 @@ function Bullet:new (data)
     kind = 'bullet',
     image = bulletImage
   }))
+
+  self.maxSpeed = 500
 end
 
 function Bullet:collisionFilter (other)
@@ -28,8 +30,13 @@ function Bullet:collisionFilter (other)
 end
 
 function Bullet:update (dt)
-  local futureX = self.x + math.cos(self.rotation) * bulletSpeed * dt
-  local futureY = self.y + math.sin(self.rotation) * bulletSpeed * dt
+  self:move(dt)
+  self:cleanIfUnused()
+end
+
+function Bullet:move (dt)
+  local futureX = self.x + math.cos(self.rotation) * self.maxSpeed * dt
+  local futureY = self.y + math.sin(self.rotation) * self.maxSpeed * dt
   local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY, self.collisionFilter)
 
   for i = 1, len do
@@ -43,8 +50,10 @@ function Bullet:update (dt)
 
   self.x = nextX
   self.y = nextY
+end
 
-  -- clean bullets when they are out of visible world bounds
+function Bullet:cleanIfUnused ()
+  -- clean bullet when it is out of visible world bounds
   local x, y, width, height = self.camera:getVisible()
 
   if self.x > x + width or self.x < x or self.y > y + height or self.y < y then

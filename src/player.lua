@@ -3,10 +3,6 @@ local _ = require('src/common')
 local Entity = require('src/entity')
 local Bullet = require('src/bullet')
 
-local canShootTimerMax = 0.5
-local angleAcceleration = 5
-local acceleration = 200
-local playerScale = 1
 local playerImage = nil
 local shootSound = nil
 
@@ -26,10 +22,14 @@ function Player:new (data)
     image = playerImage
   }))
 
-  self.canShootTimer = canShootTimerMax
-  self.canShoot = true
   self.lives = 3
   self.isAlive = true
+  self.acceleration = 200
+  self.angleAcceleration = 5
+  self.canShoot = true
+  self.canShootTimerMax = 0.5
+  self.canShootTimer = self.canShootTimerMax
+  self.approachRadius = 200
 end
 
 function Player:update (dt)
@@ -54,16 +54,6 @@ function Player:update (dt)
   end
 
   if (love.keyboard.isDown('x') or love.keyboard.isDown('space')) and self.canShoot then
-    local center = self:getCenter()
-
-    Bullet({
-      x = center.x,
-      y = center.y,
-      rotation = self.rotation,
-      world = self.world,
-      camera = self.camera
-    })
-
     self:shoot()
   end
 
@@ -71,31 +61,29 @@ function Player:update (dt)
 end
 
 function Player:rotateLeft (dt)
-  self.rotation = self.rotation - angleAcceleration * dt
+  self.rotation = self.rotation - self.angleAcceleration * dt
 end
 
 function Player:rotateRight (dt)
-  self.rotation = self.rotation + angleAcceleration * dt
+  self.rotation = self.rotation + self.angleAcceleration * dt
 end
 
 function Player:accelerateBackwards (dt)
-  self.xvel = self.xvel - acceleration * dt * math.cos(self.rotation)
-  self.yvel = self.yvel - acceleration * dt * math.sin(self.rotation)
+  self.xvel = self.xvel - self.acceleration * dt * math.cos(self.rotation)
+  self.yvel = self.yvel - self.acceleration * dt * math.sin(self.rotation)
 end
 
 function Player:accelerateForward (dt)
-  self.xvel = self.xvel + acceleration * dt * math.cos(self.rotation)
-  self.yvel = self.yvel + acceleration * dt * math.sin(self.rotation)
+  self.xvel = self.xvel + self.acceleration * dt * math.cos(self.rotation)
+  self.yvel = self.yvel + self.acceleration * dt * math.sin(self.rotation)
 end
 
 function Player:collisionFilter (item, other)
-  -- if other:is(Bullet) then
   return false
 end
 
 function Player:move (dt)
-  -- infinite world bounds for player
-  _.checkWorldBounds(self)
+  self:checkWorldBounds()
 
   local futureX = self.x + self.xvel * dt
   local futureY = self.y + self.yvel * dt
@@ -116,9 +104,20 @@ function Player:updateShooter (dt)
 end
 
 function Player:shoot ()
+  local center = self:getCenter()
+
+  Bullet({
+    x = center.x,
+    y = center.y,
+    rotation = self.rotation,
+    world = self.world,
+    camera = self.camera
+  })
+
   shootSound:play()
+
   self.canShoot = false
-  self.canShootTimer = canShootTimerMax
+  self.canShootTimer = self.canShootTimerMax
 end
 
 return Player
