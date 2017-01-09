@@ -4,9 +4,9 @@
 
 ## Demo
 
-<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo1.gif" width="280">
-<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo2.gif" width="280">
-<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo3.gif" width="280">
+<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo1.gif" width="290">
+<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo2.gif" width="290">
+<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo3.gif" width="290">
 
 ## Development
 
