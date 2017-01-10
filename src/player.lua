@@ -23,6 +23,7 @@ function Player:new (data)
   }))
 
   self.lives = 3
+  self.points = 0
   self.isAlive = true
   self.acceleration = 200
   self.angleAcceleration = 5

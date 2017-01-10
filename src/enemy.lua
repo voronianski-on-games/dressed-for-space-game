@@ -44,6 +44,7 @@ function Enemy:seek ()
   desired.y = desired.y * self.maxSpeed
 
   self:rotateToPlayer(desired.x, desired.y)
+
   return self:calculateSteer(desired.x, desired.y)
 end
 
@@ -63,6 +64,7 @@ function Enemy:seekWithApproach ()
   end
 
   self:rotateToPlayer(desired.x, desired.y)
+
   return self:calculateSteer(desired.x, desired.y)
 end
 

@@ -3,29 +3,60 @@ local anim8 = require('vendor/anim8')
 local _ = require('src/common')
 local Entity = require('src/entity')
 
-local explosionImage = nil
-local animation = nil
+local fx1Image, fx7Image
+local effects = {}
 
 local Explosion = Entity:extend()
 
 function Explosion.loadAssets ()
-  explosionImage = love.graphics.newImage('assets/fx7.png')
+  fx1Image = love.graphics.newImage('assets/fx1.png')
+  fx7Image = love.graphics.newImage('assets/fx7.png')
 
-  local grid = anim8.newGrid(82, 72, explosionImage:getWidth(), explosionImage:getHeight())
+  effects.fx1 = {
+    width = 38,
+    height = 38,
+    image = fx1Image,
+    lifeTime = 0.6
+  }
+  effects.fx7 = {
+    width = 82,
+    height = 72,
+    image = fx7Image,
+    lifeTime = 0.8
+  }
 
-  animation = anim8.newAnimation(grid('1-8', 1), 0.1)
+  local g1 = anim8.newGrid(
+    effects.fx1.width,
+    effects.fx1.height,
+    fx1Image:getWidth(),
+    fx1Image:getHeight()
+  )
+  local g7 = anim8.newGrid(
+    effects.fx7.width,
+    effects.fx7.height,
+    fx7Image:getWidth(),
+    fx7Image:getHeight()
+  )
+
+  effects.fx1.animation = anim8.newAnimation(g1('1-6', 1), 0.1)
+  effects.fx7.animation = anim8.newAnimation(g7('1-8', 1), 0.1)
 end
 
 function Explosion:new (data)
+  local effectName = data.effectName or 'fx7'
+  local effect = effects[effectName]
+
   Explosion.super.new(self, lume.extend(data, {
     kind = 'explosion',
-    image = explosionImage,
-    width = 72,
-    height = 72
+    image = effect.image,
+    width = effect.width,
+    height = effect.height
   }))
 
   self.lived = 0
-  self.lifeTime = 0.1 + math.random() -- lifetime in seconds
+  self.lifeTime = effect.lifeTime -- lifetime in seconds
+  print('lifeTime', self.lifeTime)
+  self.animation = effect.animation
 end
 
 function Explosion:update (dt)
@@ -34,14 +65,14 @@ function Explosion:update (dt)
   if self.lived >= self.lifeTime then
     self:destroy()
   else
-    animation:update(dt)
+    self.animation:update(dt)
   end
 end
 
 function Explosion:draw ()
   local center = self:getCenter()
 
-  animation:draw(
+  self.animation:draw(
     self.image,
     center.x, center.y,
     self.rotation,
