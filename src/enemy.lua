@@ -14,8 +14,8 @@ Enemy.updateOrder = 1
 
 function Enemy.loadAssets ()
   enemyImage = love.graphics.newImage('assets/enemy.png')
-  damageSound = love.audio.newSource('assets/shoot_destroy.wav')
-  deathSound = love.audio.newSource('assets/explosion_02.wav')
+  damageSound = love.audio.newSource('assets/shoot_destroy.wav', 'static')
+  deathSound = love.audio.newSource('assets/explosion_02.wav', 'static')
 end
 
 function Enemy:new (data)
@@ -33,6 +33,9 @@ function Enemy:new (data)
 end
 
 function Enemy:collisionFilter (other)
+  if other.kind == 'player' then
+    return 'touch'
+  end
 end
 
 function Enemy:seek ()
@@ -87,7 +90,7 @@ function Enemy:rotateToPlayer (dx, dy)
 end
 
 function Enemy:accelerate (dt)
-  -- steering behavior - seek player
+  -- steering behavior for seeking player
   local acceleration = self:seekWithApproach()
 
   self.xvel = self.xvel + acceleration.x * dt
@@ -100,6 +103,15 @@ function Enemy:move (dt)
   local futureX = self.x + self.xvel * dt
   local futureY = self.y + self.yvel * dt
   local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY, self.collisionFilter)
+
+  for i = 1, len do
+    local other = collisions[i].other
+
+    if other.kind == 'player' then
+      self:die()
+      other:die()
+    end
+  end
 
   self.x = nextX
   self.y = nextY
@@ -144,7 +156,8 @@ function Enemy:die ()
     x = self.x - 20,
     y = self.y - 20,
     world = self.world,
-    camera = self.camera
+    camera = self.camera,
+    effectName = 'fx7'
   })
 end
 

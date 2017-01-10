@@ -55,7 +55,6 @@ function Explosion:new (data)
 
   self.lived = 0
   self.lifeTime = effect.lifeTime -- lifetime in seconds
-  print('lifeTime', self.lifeTime)
   self.animation = effect.animation
 end
 

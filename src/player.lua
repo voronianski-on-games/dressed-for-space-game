@@ -2,9 +2,11 @@ local lume = require('vendor/lume')
 local _ = require('src/common')
 local Entity = require('src/entity')
 local Bullet = require('src/bullet')
+local Explosion = require('src/explosion')
 
 local playerImage = nil
 local shootSound = nil
+local deathSound = nil
 
 local Player = Entity:extend()
 
@@ -12,8 +14,9 @@ Player.drawOrder = 2
 Player.updateOrder = 1
 
 function Player.loadAssets ()
-  shootSound = love.audio.newSource('assets/player_shoot.wav', 'static')
   playerImage = love.graphics.newImage('assets/player.png')
+  shootSound = love.audio.newSource('assets/player_shoot.wav', 'static')
+  deathSound = love.audio.newSource('assets/death.wav', 'static')
 end
 
 function Player:new (data)
@@ -119,6 +122,21 @@ function Player:shoot ()
 
   self.canShoot = false
   self.canShootTimer = self.canShootTimerMax
+end
+
+function Player:die ()
+  self.isAlive = false
+  self:destroy()
+  self.camera:shake(8)
+  deathSound:play()
+
+  Explosion({
+    x = self.x,
+    y = self.y,
+    world = self.world,
+    camera = self.camera,
+    effectName = 'fx1'
+  })
 end
 
 return Player
