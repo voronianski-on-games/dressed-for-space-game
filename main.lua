@@ -31,7 +31,11 @@ function love.keypressed (key)
     love.event.push('quit')
   end
 
-  if key == 'esc' then
-    print('show menu here')
+  if key == 'escape' then
+    if Gamestate.current() ~= menu then
+      Gamestate.switch(menu)
+    else
+      Gamestate.switch(game)
+    end
   end
 end

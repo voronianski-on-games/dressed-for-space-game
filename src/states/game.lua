@@ -28,18 +28,14 @@ function game:update (dt)
 end
 
 function game:draw ()
-  local ww, wh = love.graphics.getDimensions()
-
   shaders.postEffect():draw(function ()
     camera:draw(function (x, y, width, height)
       media.drawBackgroundImage()
       map:draw(x, y, width, height)
     end)
 
-    love.graphics.setFont(media.imageFontTitle)
-    love.graphics.print('DRESSED FOR SPACE', ww / 2 - 260, 100)
-
     if _.debug then
+      local ww, wh = love.graphics.getDimensions()
       local stats = ('fps: %d, mem: %dKB, items: %d'):format(
         love.timer.getFPS(),
         collectgarbage('count'),
