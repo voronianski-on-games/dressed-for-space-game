@@ -1,7 +1,7 @@
 local lume = require('vendor/lume')
 local anim8 = require('vendor/anim8')
 local _ = require('src/common')
-local Entity = require('src/enteties/entity')
+local Entity = require('src/entities/entity')
 
 local fx1Image, fx7Image
 local effects = {}

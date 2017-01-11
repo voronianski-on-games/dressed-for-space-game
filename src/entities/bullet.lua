@@ -1,6 +1,6 @@
 local lume = require('vendor/lume')
 local _ = require('src/common')
-local Entity = require('src/enteties/entity')
+local Entity = require('src/entities/entity')
 
 local bulletSpeed = 500
 local bulletImage = nil
