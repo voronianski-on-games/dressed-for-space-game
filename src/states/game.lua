@@ -13,6 +13,10 @@ function game:init ()
   map = Map(camera)
 end
 
+function game:enter ()
+  map:reset()
+end
+
 function game:update (dt)
   -- update elements that are visible to the camera and not far away from radius
   local x, y, width, height = camera:getVisible()
