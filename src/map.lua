@@ -1,9 +1,8 @@
 local bump = require('vendor/bump')
 local Object = require('vendor/object')
 local _ = require('src/common')
-local Player = require('src/player')
-local Enemy = require('src/enemy')
-local Explosion = require('src/explosion')
+local Player = require('src/enteties/player')
+local Enemy = require('src/enteties/enemy')
 
 local Map = Object:extend()
 

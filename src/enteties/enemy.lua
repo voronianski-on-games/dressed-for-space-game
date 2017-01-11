@@ -1,7 +1,7 @@
 local lume = require('vendor/lume')
 local _ = require('src/common')
-local Entity = require('src/entity')
-local Explosion = require('src/explosion')
+local Entity = require('src/enteties/entity')
+local Explosion = require('src/enteties/explosion')
 
 local enemyImage = nil
 local damageSound = nil

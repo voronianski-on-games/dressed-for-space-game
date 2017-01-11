@@ -1,14 +1,13 @@
-local _ = require('src/common')
-local Map = require('src/map')
+local Gamestate = require('vendor/gamestate')
+local Player = require('src/enteties/player')
+local Bullet = require('src/enteties/bullet')
+local Enemy = require('src/enteties/enemy')
+local Explosion = require('src/enteties/explosion')
 local media = require('src/media')
-local Camera = require('src/camera')
-local Player = require('src/player')
-local Bullet = require('src/bullet')
-local Enemy = require('src/enemy')
-local Explosion = require('src/explosion')
 local shaders = require('src/shaders')
+local menu = require('src/states/menu')
+local game = require('src/states/game')
 
-local camera, map
 
 function love.load ()
   love.mouse.setVisible(false)
@@ -23,22 +22,8 @@ function love.load ()
   Enemy.loadAssets()
   Explosion.loadAssets()
 
-  camera = Camera()
-  map = Map(camera)
-end
-
-function love.update (dt)
-  -- update elements that are visible to the camera and not far away from radius
-  local x, y, width, height = camera:getVisible()
-
-  x = x - _.UPDATE_RADIUS
-  y = y - _.UPDATE_RADIUS
-  width = width + _.UPDATE_RADIUS * 2
-  height = height + _.UPDATE_RADIUS * 2
-
-  map:update(dt, x, y, width, height)
-  camera:setPosition(map.player.x, map.player.y)
-  camera:update(dt)
+  Gamestate.registerEvents()
+  Gamestate.switch(game)
 end
 
 function love.keypressed (key)
@@ -46,32 +31,7 @@ function love.keypressed (key)
     love.event.push('quit')
   end
 
-  if key == 'lcmd' and key == 'r' then
-    print('restart game here')
-  end
-
   if key == 'esc' then
     print('show menu here')
   end
-end
-
-function love.draw ()
-  local w, h = love.graphics.getDimensions()
-
-  shaders.postEffect():draw(function ()
-    camera:draw(function (x, y, width, height)
-      media.drawBackgroundImage()
-      map:draw(x, y, width, height)
-    end)
-
-    love.graphics.setFont(media.imageFontTitle)
-    love.graphics.print('DRESSED FOR SPACE', w / 2 - 260, 100)
-
-    if _.debug then
-      local stats = ('fps: %d, mem: %dKB, items: %d'):format(love.timer.getFPS(), collectgarbage('count'), map:countItems())
-
-      love.graphics.setFont(media.imageFontLowercase)
-      love.graphics.print(stats, 5, h - 20)
-    end
-  end)
 end

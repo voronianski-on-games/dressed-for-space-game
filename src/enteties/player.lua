@@ -1,8 +1,8 @@
 local lume = require('vendor/lume')
 local _ = require('src/common')
-local Entity = require('src/entity')
-local Bullet = require('src/bullet')
-local Explosion = require('src/explosion')
+local Entity = require('src/enteties/entity')
+local Bullet = require('src/enteties/bullet')
+local Explosion = require('src/enteties/explosion')
 
 local playerImage = nil
 local shootSound = nil
@@ -33,7 +33,7 @@ function Player:new (data)
   self.canShoot = true
   self.canShootTimerMax = 0.5
   self.canShootTimer = self.canShootTimerMax
-  self.approachRadius = 200
+  self.approachRadius = 250
 end
 
 function Player:update (dt)
