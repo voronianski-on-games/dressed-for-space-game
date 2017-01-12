@@ -3,6 +3,7 @@ local Object = require('vendor/object')
 local _ = require('src/common')
 local Player = require('src/entities/player')
 local Enemy = require('src/entities/enemy')
+local Gem = require('src/entities/gem')
 
 local Map = Object:extend()
 
@@ -30,6 +31,13 @@ function Map:reset ()
     x = 1200,
     y = 1200,
     player = self.player,
+    world = self.world,
+    camera = self.camera
+  })
+
+  Gem({
+    x = 1000,
+    y = 1000,
     world = self.world,
     camera = self.camera
   })

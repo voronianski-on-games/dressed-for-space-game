@@ -4,7 +4,7 @@ local media = require('src/media')
 local shaders = require('src/shaders')
 
 local menu = {}
-local title = nil
+local title = {text = 'DRESSED FOR SPACE'}
 
 function menu:init ()
 
@@ -13,13 +13,13 @@ end
 function menu:enter ()
   local ww, wh = love.graphics.getDimensions()
 
-  title = {
-    x = ww / 2 - 260,
-    y = -60,
-    text = 'DRESSED FOR SPACE'
-  }
+  title.x = ww / 2 - 260
+  title.y = -60
 
-  Timer.tween(5, title, {y = 100}, 'in-bounce')
+  Timer.tween(2, title, {y = 120}, 'in-bounce')
+end
+
+function menu:leave ()
 end
 
 function menu:update (dt)
