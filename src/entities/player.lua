@@ -1,4 +1,5 @@
 local lume = require('vendor/lume')
+local Timer = require('vendor/timer')
 local _ = require('src/common')
 local Entity = require('src/entities/entity')
 local Bullet = require('src/entities/bullet')
@@ -28,17 +29,23 @@ function Player:new (data)
   self.lives = 3
   self.points = 0
   self.isAlive = true
+  self.isVisible = true
+  self.isInvincible = false
   self.acceleration = 200
   self.angleAcceleration = 5
   self.canShoot = true
   self.canShootTimerMax = 0.5
   self.canShootTimer = self.canShootTimerMax
   self.approachRadius = 250
+  self.timer = Timer.new()
+
+  self:makeInvincible(3)
 end
 
 function Player:update (dt)
   if not self.isAlive then return end
 
+  self.timer:update(dt)
   self:updateShooter(dt)
 
   if love.keyboard.isDown('d') or love.keyboard.isDown('right') then
@@ -62,6 +69,12 @@ function Player:update (dt)
   end
 
   self:move(dt)
+end
+
+function Player:draw ()
+  if self.isVisible then
+    Player.super.draw(self)
+  end
 end
 
 function Player:rotateLeft (dt)
@@ -125,6 +138,10 @@ function Player:shoot ()
 end
 
 function Player:die ()
+  if self.isInvincible then
+    return
+  end
+
   self.isAlive = false
   self:destroy()
   self.camera:shake(8)
@@ -137,6 +154,21 @@ function Player:die ()
     camera = self.camera,
     effectName = 'fx1'
   })
+end
+
+function Player:makeInvincible (seconds)
+  local timePassed = 0
+  local function onUpdate (dt)
+    timePassed = timePassed + dt
+    self.isVisible = (timePassed % 0.2) < 0.1
+  end
+  local function after ()
+    self.isVisible = true
+    self.isInvincible = false
+  end
+
+  self.isInvincible = true
+  self.timer:during(seconds, onUpdate, after)
 end
 
 return Player

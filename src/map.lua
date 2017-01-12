@@ -8,7 +8,6 @@ local Map = Object:extend()
 
 function Map:new (camera)
   self.camera = camera
-  self:reset()
 end
 
 function Map:reset ()
