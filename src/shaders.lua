@@ -1,7 +1,8 @@
 local shine = require('vendor/shine')
 
 local shaders = {}
-local postEffect
+local postEffect = nil
+local postEffectBlurry = nil
 
 function shaders.load ()
   local grain = shine.filmgrain({opacity = 0.1})
@@ -10,10 +11,15 @@ function shaders.load ()
   local vignette = shine.vignette({radius = 0.9, opacity = 0.3})
 
   postEffect = vignette:chain(grain):chain(pixelate):chain(scanlines)
+  postEffectBlurry = shine.boxblur({radius = 3.8})
 end
 
 function shaders.postEffect ()
   return postEffect
+end
+
+function shaders.postEffectBlurry ()
+  return postEffectBlurry
 end
 
 return shaders

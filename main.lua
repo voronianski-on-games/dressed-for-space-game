@@ -23,7 +23,7 @@ function love.load ()
   Explosion.loadAssets()
 
   Gamestate.registerEvents()
-  Gamestate.switch(game)
+  Gamestate.switch(menu)
 end
 
 function love.keypressed (key)
