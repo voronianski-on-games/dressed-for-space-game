@@ -2,8 +2,8 @@ local lume = require('vendor/lume')
 local _ = require('src/common')
 local Entity = require('src/entities/entity')
 
-local bulletSpeed = 500
-local bulletImage = nil
+local bullet1Image, bullet2Image
+local bullets = {}
 
 local Bullet = Entity:extend()
 
@@ -11,16 +11,23 @@ Bullet.drawOrder = 1
 Bullet.updateOrder = 2
 
 function Bullet.loadAssets ()
-  bulletImage = love.graphics.newImage('assets/images/bullet.png')
+  bullet1Image = love.graphics.newImage('assets/images/bullet1.png')
+  bullet2Image = love.graphics.newImage('assets/images/bullet2.png')
+
+  bullets.default = {image = bullet1Image}
+  bullets.longball = {image = bullet2Image}
 end
 
 function Bullet:new (data)
+  local bulletType = data.typeName or 'default'
+  local bullet = bullets[bulletType]
+
   Bullet.super.new(self, lume.extend(data, {
     kind = 'bullet',
-    image = bulletImage
+    image = bullet.image
   }))
 
-  self.maxSpeed = 500
+  self.maxSpeed = data.maxSpeed or 500
 end
 
 function Bullet:collisionFilter (other)
