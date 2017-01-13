@@ -15,9 +15,9 @@ Player.drawOrder = 2
 Player.updateOrder = 1
 
 function Player.loadAssets ()
-  playerImage = love.graphics.newImage('assets/player.png')
-  shootSound = love.audio.newSource('assets/player_shoot.wav', 'static')
-  deathSound = love.audio.newSource('assets/death.wav', 'static')
+  playerImage = love.graphics.newImage('assets/images/player.png')
+  shootSound = love.audio.newSource('assets/sounds/player_shoot.wav', 'static')
+  deathSound = love.audio.newSource('assets/sounds/death.wav', 'static')
 end
 
 function Player:new (data)
@@ -36,7 +36,7 @@ function Player:new (data)
   self.canShoot = true
   self.canShootTimerMax = 0.5
   self.canShootTimer = self.canShootTimerMax
-  self.approachRadius = 250
+  self.approachRadius = 200
   self.timer = Timer.new()
 
   self:makeInvincible(3)
@@ -95,8 +95,10 @@ function Player:accelerateForward (dt)
   self.yvel = self.yvel + self.acceleration * dt * math.sin(self.rotation)
 end
 
-function Player:collisionFilter (item, other)
-  return false
+function Player:collisionFilter (other)
+  if other.kind == 'gem' then
+    return 'cross'
+  end
 end
 
 function Player:move (dt)
@@ -105,6 +107,15 @@ function Player:move (dt)
   local futureX = self.x + self.xvel * dt
   local futureY = self.y + self.yvel * dt
   local nextX, nextY, collisions, len = self.world:move(self, futureX, futureY, self.collisionFilter)
+
+  for i = 1, len do
+    local other = collisions[i].other
+
+    if other.kind == 'gem' then
+      self:collectPoints(other.points)
+      other:pick()
+    end
+  end
 
   self.x = nextX
   self.y = nextY
@@ -169,6 +180,10 @@ function Player:makeInvincible (seconds)
 
   self.isInvincible = true
   self.timer:during(seconds, onUpdate, after)
+end
+
+function Player:collectPoints (points)
+  self.points = self.points + points
 end
 
 return Player

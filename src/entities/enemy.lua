@@ -2,6 +2,7 @@ local lume = require('vendor/lume')
 local _ = require('src/common')
 local Entity = require('src/entities/entity')
 local Explosion = require('src/entities/explosion')
+local Gem = require('src/entities/gem')
 
 local enemyImage = nil
 local damageSound = nil
@@ -13,9 +14,9 @@ Enemy.drawOrder = 2
 Enemy.updateOrder = 1
 
 function Enemy.loadAssets ()
-  enemyImage = love.graphics.newImage('assets/enemy.png')
-  damageSound = love.audio.newSource('assets/shoot_destroy.wav', 'static')
-  deathSound = love.audio.newSource('assets/explosion_02.wav', 'static')
+  enemyImage = love.graphics.newImage('assets/images/enemy.png')
+  damageSound = love.audio.newSource('assets/sounds/shoot_destroy.wav', 'static')
+  deathSound = love.audio.newSource('assets/sounds/explosion_02.wav', 'static')
 end
 
 function Enemy:new (data)
@@ -30,6 +31,7 @@ function Enemy:new (data)
   self.healthPoints = 5
   self.seekForce = 5
   self.maxSpeed = 250
+  self.hasGem = true -- love.math.random(1, 5) == 3
 end
 
 function Enemy:collisionFilter (other)
@@ -159,6 +161,16 @@ function Enemy:die ()
     camera = self.camera,
     effectName = 'fx7'
   })
+
+  if self.hasGem then
+    Gem({
+      x = self.x + 2,
+      y = self.y + 2,
+      world = self.world,
+      camera = self.camera,
+      typeName = 'ruby'
+    })
+  end
 end
 
 return Enemy

@@ -11,7 +11,7 @@ Bullet.drawOrder = 1
 Bullet.updateOrder = 2
 
 function Bullet.loadAssets ()
-  bulletImage = love.graphics.newImage('assets/bullet.png')
+  bulletImage = love.graphics.newImage('assets/images/bullet.png')
 end
 
 function Bullet:new (data)

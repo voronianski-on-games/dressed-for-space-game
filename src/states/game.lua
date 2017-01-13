@@ -40,10 +40,11 @@ function game:draw ()
 
     if _.debug then
       local ww, wh = love.graphics.getDimensions()
-      local stats = ('fps: %d, mem: %dKB, items: %d'):format(
+      local stats = ('fps: %d, mem: %dKB, items: %d, points: %d'):format(
         love.timer.getFPS(),
         collectgarbage('count'),
-        map:countItems()
+        map:countItems(),
+        map.player.points
       )
 
       love.graphics.setFont(media.imageFontLowercase)

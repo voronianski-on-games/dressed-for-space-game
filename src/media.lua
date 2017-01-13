@@ -4,7 +4,7 @@ local media = {}
 local bgImage, bgQuad, bgSong, imageFont
 
 function media.loadBackgroundImage ()
-  bgImage = love.graphics.newImage('assets/bg1.png')
+  bgImage = love.graphics.newImage('assets/images/bg1.png')
   bgImage:setWrap('repeat', 'repeat')
 
   bgQuad = love.graphics.newQuad(
@@ -19,21 +19,21 @@ end
 
 function media.playBackgroundPlaylist ()
   -- TBD: more songs in background
-  bgSong = love.audio.newSource('assets/uoki_toki-king_of_my_castle.mp3', 'static')
+  bgSong = love.audio.newSource('assets/music/uoki_toki-king_of_my_castle.mp3', 'static')
   -- bgSong:play()
 end
 
 function media.loadImageFonts ()
   media.imageFont = love.graphics.newImageFont(
-    'assets/imagefont.png',
+    'assets/images/imagefont.png',
     ' abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;%&`\'*#=[]"'
   )
   media.imageFontTitle = love.graphics.newImageFont(
-    'assets/imagefont_title.png',
+    'assets/images/imagefont_title.png',
     ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
   )
   media.imageFontLowercase = love.graphics.newImageFont(
-    'assets/imagefont_lowercase.png',
+    'assets/images/imagefont_lowercase.png',
     ' abcdefghijklmnopqrstuvwxyz[/]^_/0123456789:;<=!"#$%&\'()*+,-.>?@'
   )
 end

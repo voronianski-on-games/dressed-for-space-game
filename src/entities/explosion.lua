@@ -9,8 +9,8 @@ local effects = {}
 local Explosion = Entity:extend()
 
 function Explosion.loadAssets ()
-  fx1Image = love.graphics.newImage('assets/fx1.png')
-  fx7Image = love.graphics.newImage('assets/fx7.png')
+  fx1Image = love.graphics.newImage('assets/images/fx1.png')
+  fx7Image = love.graphics.newImage('assets/images/fx7.png')
 
   effects.fx1 = {
     width = 38,
