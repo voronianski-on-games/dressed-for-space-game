@@ -91,7 +91,6 @@ function Gem:new (data)
   self.lifeTime = gem.lifeTime -- lifetime in seconds
   self.animation = gem.animation
   self.points = love.math.random(10, 50)
-  print(self.points)
 end
 
 function Gem:update (dt)
