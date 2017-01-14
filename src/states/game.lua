@@ -34,7 +34,7 @@ end
 function game:draw ()
   shaders.postEffect():draw(function ()
     camera:draw(function (x, y, width, height)
-      media.drawBackgroundImage()
+      media.drawGameBackgroundImage()
       map:draw(x, y, width, height)
     end)
 

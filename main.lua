@@ -15,7 +15,7 @@ function love.load ()
 
   shaders.load()
   media.loadImageFonts()
-  media.loadBackgroundImage()
+  media.loadBackgroundImages()
   media.playBackgroundPlaylist()
 
   Player.loadAssets()

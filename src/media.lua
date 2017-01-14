@@ -1,19 +1,31 @@
 local _ = require('src/common')
 
 local media = {}
-local bgImage, bgQuad, bgSong, imageFont
+local gameBgImage, gameBgQuad
+local menuBgImage, menuBgQuad
+local bgSong
 
-function media.loadBackgroundImage ()
-  bgImage = love.graphics.newImage('assets/images/bg1.png')
-  bgImage:setWrap('repeat', 'repeat')
-
-  bgQuad = love.graphics.newQuad(
+function media.loadBackgroundImages ()
+  gameBgImage = love.graphics.newImage('assets/images/bg1.png')
+  gameBgImage:setWrap('repeat', 'repeat')
+  gameBgQuad = love.graphics.newQuad(
     _.WORLD_ORIGIN_X,
     _.WORLD_ORIGIN_Y,
     _.WORLD_WIDTH,
     _.WORLD_HEIGHT,
-    bgImage:getWidth(),
-    bgImage:getHeight()
+    gameBgImage:getWidth(),
+    gameBgImage:getHeight()
+  )
+
+  menuBgImage = love.graphics.newImage('assets/images/bg2.png')
+  menuBgImage:setWrap('repeat', 'repeat')
+  menuBgQuad = love.graphics.newQuad(
+    _.WORLD_ORIGIN_X,
+    _.WORLD_ORIGIN_Y,
+    _.WORLD_WIDTH,
+    _.WORLD_HEIGHT,
+    menuBgImage:getWidth(),
+    menuBgImage:getHeight()
   )
 end
 
@@ -38,8 +50,12 @@ function media.loadImageFonts ()
   )
 end
 
-function media.drawBackgroundImage ()
-  love.graphics.draw(bgImage, bgQuad, 0, 0)
+function media.drawGameBackgroundImage ()
+  love.graphics.draw(gameBgImage, gameBgQuad, 0, 0)
+end
+
+function media.drawMenuBackgroundImage ()
+  love.graphics.draw(menuBgImage, menuBgQuad, 0, 0)
 end
 
 return media
