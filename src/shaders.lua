@@ -6,7 +6,7 @@ local postEffectBlurry = nil
 
 function shaders.load ()
   local grain = shine.filmgrain({opacity = 0.1})
-  local pixelate = shine.pixelate({pixel_size = 1.15})
+  local pixelate = shine.pixelate({pixel_size = 1.2})
   local scanlines = shine.scanlines({opacity = 0.3})
   local vignette = shine.vignette({radius = 0.9, opacity = 0.3})
 

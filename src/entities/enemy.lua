@@ -28,6 +28,7 @@ function Enemy:new (data)
   }))
 
   self.player = data.player
+  self.points = love.math.random(100, 200)
   self.healthPoints = 5
   self.seekForce = 5
   self.maxSpeed = 250
@@ -138,7 +139,7 @@ function Enemy:draw (lx, ly)
   )
 end
 
-function Enemy:damage (onDeath)
+function Enemy:damage ()
   damageSound:play()
 
   self.camera:shake(2)
@@ -146,10 +147,6 @@ function Enemy:damage (onDeath)
 
   if self.healthPoints <= 0 then
     self:die()
-
-    if type(onDeath) == 'function' then
-      onDeath(love.math.random(100, 200))
-    end
   end
 end
 
@@ -175,6 +172,8 @@ function Enemy:die ()
       typeName = 'ruby'
     })
   end
+
+  self.player:collectPoints(self.points)
 end
 
 return Enemy

@@ -3,7 +3,7 @@ local inspect = require('vendor/inspect')
 local _ = {
   -- disable in production
   debug = true,
-  debugEntities = false,
+  debugEntities = true,
 
   WORLD_ORIGIN_X = 0,
   WORLD_ORIGIN_Y = 0,
@@ -41,6 +41,9 @@ function _.normalizeVector (x, y)
     x = x / len,
     y = y / len
   }
+end
+
+function _.noop ()
 end
 
 function _.inspect (...)

@@ -139,8 +139,7 @@ function Player:shoot ()
     y = center.y,
     rotation = self.rotation,
     world = self.world,
-    camera = self.camera,
-    player = self
+    camera = self.camera
   })
 
   shootSound:play()

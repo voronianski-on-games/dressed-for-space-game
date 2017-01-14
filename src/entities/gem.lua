@@ -10,7 +10,7 @@ local gems = {}
 local Gem = Entity:extend()
 
 Gem.drawOrder = 1
-Gem.updateOrder = 2
+Gem.updateOrder = -1
 
 function Gem.loadAssets ()
   gemSound = love.audio.newSource('assets/sounds/gold1.wav', 'static')
@@ -91,6 +91,9 @@ function Gem:new (data)
   self.lifeTime = gem.lifeTime -- lifetime in seconds
   self.animation = gem.animation
   self.points = love.math.random(10, 50)
+  self.angleAcceleration = lume.randomchoice({-2, 2})
+  self.xvel = lume.randomchoice({-5, 5})
+  self.yvel = lume.randomchoice({-5, 5})
 end
 
 function Gem:update (dt)
@@ -100,7 +103,22 @@ function Gem:update (dt)
     self:destroy()
   else
     self.animation:update(dt)
+    self:rotate(dt)
+    self:move(dt)
   end
+end
+
+function Gem:rotate (dt)
+  self.rotation = self.rotation + self.angleAcceleration * dt
+end
+
+function Gem:move (dt)
+  local futureX = self.x + self.xvel * dt
+  local futureY = self.y + self.yvel * dt
+  local nextX, nextY = self.world:move(self, futureX, futureY)
+
+  self.x = nextX
+  self.y = nextY
 end
 
 function Gem:draw ()
