@@ -138,7 +138,7 @@ function Enemy:draw (lx, ly)
   )
 end
 
-function Enemy:damage ()
+function Enemy:damage (onDeath)
   damageSound:play()
 
   self.camera:shake(2)
@@ -146,6 +146,10 @@ function Enemy:damage ()
 
   if self.healthPoints <= 0 then
     self:die()
+
+    if type(onDeath) == 'function' then
+      onDeath(love.math.random(100, 200))
+    end
   end
 end
 

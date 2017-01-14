@@ -1,4 +1,5 @@
 local Object = require('vendor/object')
+local lume = require('vendor/lume')
 local _ = require('src/common')
 
 local Entity = Object:extend()
@@ -6,6 +7,7 @@ local Entity = Object:extend()
 function Entity:new (data)
   data = data or {}
 
+  self.id = lume.uuid()
   self.world = data.world
   self.camera = data.camera
   self.image = data.image

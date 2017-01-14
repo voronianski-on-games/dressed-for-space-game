@@ -27,6 +27,7 @@ function Bullet:new (data)
     image = bullet.image
   }))
 
+  self.player = data.player
   self.maxSpeed = data.maxSpeed or 500
 end
 
@@ -51,7 +52,9 @@ function Bullet:move (dt)
 
     if other.kind == 'enemy' then
       self:destroy()
-      other:damage()
+      other:damage(function (points)
+        self.player:collectPoints(points)
+      end)
     end
   end
 
