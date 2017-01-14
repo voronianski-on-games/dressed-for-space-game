@@ -168,6 +168,10 @@ function Player:die ()
 end
 
 function Player:makeInvincible (seconds)
+  if self.isInvincible then
+    return
+  end
+
   local timePassed = 0
   local function onUpdate (dt)
     timePassed = timePassed + dt

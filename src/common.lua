@@ -3,7 +3,7 @@ local inspect = require('vendor/inspect')
 local _ = {
   -- disable in production
   debug = true,
-  debugEntities = true,
+  debugEntities = false,
 
   WORLD_ORIGIN_X = 0,
   WORLD_ORIGIN_Y = 0,

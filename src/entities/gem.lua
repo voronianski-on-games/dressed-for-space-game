@@ -1,5 +1,6 @@
 local lume = require('vendor/lume')
 local anim8 = require('vendor/anim8')
+local Timer = require('vendor/timer')
 local _ = require('src/common')
 local Entity = require('src/entities/entity')
 
@@ -24,7 +25,7 @@ function Gem.loadAssets ()
     width = 16,
     height = 20,
     image = gem1Image,
-    lifeTime = 10
+    lifeTime = 15
   }
   gems.star = {
     width = 21,
@@ -36,13 +37,13 @@ function Gem.loadAssets ()
     width = 20,
     height = 20,
     image = gem3Image,
-    lifeTime = 30
+    lifeTime = 25
   }
   gems.jade = {
     width = 15,
     height = 15,
     image = gem4Image,
-    lifeTime = 40
+    lifeTime = 30
   }
 
   local g1 = anim8.newGrid(
@@ -89,19 +90,29 @@ function Gem:new (data)
 
   self.lived = 0
   self.lifeTime = gem.lifeTime -- lifetime in seconds
+  self.blinkDuration = 5 -- blinking duration before disappearing
+  self.blinkTime = self.lifeTime - self.blinkDuration
   self.animation = gem.animation
   self.points = love.math.random(10, 50)
   self.angleAcceleration = lume.randomchoice({-2, 2})
-  self.xvel = lume.randomchoice({-5, 5})
-  self.yvel = lume.randomchoice({-5, 5})
+  self.xvel = lume.randomchoice({-5, -1, 0, 1, 5})
+  self.yvel = lume.randomchoice({-5, -1, 0, 1, 5})
+  self.isVisible = true
+
+  self.timer = Timer.new()
 end
 
 function Gem:update (dt)
+  self.timer:update(dt)
   self.lived = self.lived + dt
 
   if self.lived >= self.lifeTime then
     self:destroy()
   else
+    if self.lived >= self.blinkTime then
+      self:blink()
+    end
+
     self.animation:update(dt)
     self:rotate(dt)
     self:move(dt)
@@ -122,15 +133,36 @@ function Gem:move (dt)
 end
 
 function Gem:draw ()
-  local center = self:getCenter()
+  if self.isVisible then
+    local center = self:getCenter()
 
-  self.animation:draw(
-    self.image,
-    center.x, center.y,
-    self.rotation,
-    self.xscale, self.yscale,
-    center.ox, center.oy
-  )
+    self.animation:draw(
+      self.image,
+      center.x, center.y,
+      self.rotation,
+      self.xscale, self.yscale,
+      center.ox, center.oy
+    )
+  end
+end
+
+function Gem:blink ()
+  if self._blinking then
+    return
+  end
+
+  local timePassed = 0
+  local function onUpdate (dt)
+    timePassed = timePassed + dt
+    self.isVisible = (timePassed % 0.2) < 0.1
+  end
+  local function after ()
+    self.isVisible = true
+    self._blinking = false
+  end
+
+  self._blinking = true
+  self.timer:during(self.blinkDuration, onUpdate, after)
 end
 
 function Gem:pick ()
