@@ -1,6 +1,12 @@
-# Asteroids on Steroids with LÖVE
+# Dressed for Space
 
-> Asteroids with enemies space shooter variation.
+![](https://img.shields.io/badge/status-wip-yellow.svg?style=flat-square)
+
+> Arcade game highly inspired by classics like [Galaxian]() and [Asteroids]() but with a bit another approach on gameplay. 
+
+## Story
+
+Your spaceship were on a spy mission that went all wrong. Now you're alone in unknown galaxy far behind which is full of agressive enemies. Get ready to fight! Destroy all of them and grab unique gems. Collect as many points as you can and maybe you'll find the portal that will take you back home...
 
 ## Demo
 
