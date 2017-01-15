@@ -43,10 +43,6 @@ function _.normalizeVector (x, y)
   }
 end
 
-function _.typeWrite(text)
-  -- body
-end
-
 function _.noop ()
 end
 
