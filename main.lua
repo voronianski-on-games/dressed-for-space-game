@@ -33,7 +33,7 @@ function love.keypressed (key)
     love.event.push('quit')
   end
 
-  if key == 'escape' then
+  if key == 'return' then
     if Gamestate.current() ~= menu then
       Gamestate.switch(menu)
     else
