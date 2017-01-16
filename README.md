@@ -4,7 +4,7 @@
 
 > Arcade game highly inspired by classics like [Galaxian](https://en.wikipedia.org/wiki/Galaxian) and [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) but with slightly different approach on gameplay. 
 
-> _"Your spaceship were on a spy mission that went all wrong. Now you're alone in the middle of unknown galaxy far away. And what makes it even more worse -  it is full of agressive enemies. So get ready to fight! Destroy all of them and grab unique gems. Collect as many points as you can and maybe you'll find the portal that will take you back home..."_
+> _"Your spaceship were on a spy mission that went all wrong. Now you're alone in the middle of unknown galaxy far away. And even worse - it is full of agressive enemies! So get ready to fight! Destroy all of them and grab unique gems. Collect as many points as you can and maybe you'll find the portal that will take you back home..."_
 
 ## Demo History
 
