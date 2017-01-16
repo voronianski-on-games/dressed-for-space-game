@@ -1,6 +1,6 @@
 # <img src="https://github.com/voronianski-on-games/dressed-for-space-game/raw/master/assets/images/life_icon.png" /> DRESSED FOR SPACE
 
-![](https://img.shields.io/badge/status-wip-yellow.svg?style=flat-square)
+![](https://img.shields.io/badge/status-wip-yellow.svg?style=flat)
 
 > Arcade game highly inspired by classics like [Galaxian](https://en.wikipedia.org/wiki/Galaxian) and [Asteroids](https://en.wikipedia.org/wiki/Asteroids_(video_game)) but with slightly different approach on gameplay. 
 
