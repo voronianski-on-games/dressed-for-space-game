@@ -8,9 +8,10 @@
 
 ## Demo History
 
-<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo1.gif" width="292">
-<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo2.gif" width="292">
-<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo3.gif" width="292">
+<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo1.gif" width="438">
+<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo2.gif" width="438">
+<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo3.gif" width="438">
+<img src="https://github.com/voronianski-on-games/asteroids-on-steroids-love2d/raw/master/demos/demo4.gif" width="438">
 
 ## Development
 
