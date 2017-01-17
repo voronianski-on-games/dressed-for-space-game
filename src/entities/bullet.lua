@@ -27,11 +27,14 @@ function Bullet:new (data)
     image = bullet.image
   }))
 
+  self.targetKind = data.targetKind or 'enemy'
   self.maxSpeed = data.maxSpeed or 500
 end
 
 function Bullet:collisionFilter (other)
-  if other.kind == 'enemy' then
+  if self:isTarget(other, 'enemy') or
+     self:isTarget(other, 'player')
+  then
     return 'touch'
   end
 end
@@ -49,9 +52,14 @@ function Bullet:move (dt)
   for i = 1, len do
     local other = collisions[i].other
 
-    if other.kind == 'enemy' then
+    if self:isTarget(other, 'enemy') then
       self:destroy()
       other:damage()
+    end
+
+    if self:isTarget(other, 'player') then
+      self:destroy()
+      other:die()
     end
   end
 
@@ -66,6 +74,10 @@ function Bullet:cleanIfUnused ()
   if self.x > x + width or self.x < x or self.y > y + height or self.y < y then
     self:destroy()
   end
+end
+
+function Bullet:isTarget (value, kind)
+  return self.targetKind == kind and value.kind == kind
 end
 
 return Bullet

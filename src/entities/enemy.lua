@@ -33,7 +33,10 @@ function Enemy:new (data)
   self.healthPoints = 5
   self.seekForce = 5
   self.maxSpeed = 250
-  self.hasGem = true -- love.math.random(1, 5) == 3
+  self.hasGem = lume.weightedchoice({['no'] = 2, ['yes'] = 0}) == 'yes'
+  self.canShoot = false
+  self.canShootTimerMax = 5
+  self.canShootTimer = self.canShootTimerMax
 end
 
 function Enemy:collisionFilter (other)
@@ -124,8 +127,10 @@ function Enemy:move (dt)
 end
 
 function Enemy:update (dt)
+  self:updateShooter(dt)
   self:accelerate(dt)
   self:move(dt)
+  self:shoot()
 end
 
 function Enemy:draw (lx, ly)
@@ -159,24 +164,55 @@ function Enemy:die ()
   deathSound:play()
 
   Explosion({
-    x = center.x,
-    y = center.y,
+    x = self.x - 20,
+    y = self.y - 20,
     world = self.world,
     camera = self.camera,
     effectName = 'fx7'
   })
 
   if self.hasGem then
+    local randomGemType = lume.randomchoice({'ruby', 'gold', 'star', 'jade'})
+
     Gem({
       x = center.x,
       y = center.y,
       world = self.world,
       camera = self.camera,
-      typeName = 'ruby'
+      typeName = randomGemType
     })
   end
 
   self.player:collectPoints(self.points)
+end
+
+function Enemy:updateShooter (dt)
+  self.canShootTimer = self.canShootTimer - dt
+
+  if self.canShootTimer < 0 then
+    self.canShoot = true
+  end
+end
+
+function Enemy:shoot ()
+  if not self.canShoot then
+    return
+  end
+
+  local center = self:getCenter()
+
+  Bullet({
+    x = center.x - 5,
+    y = center.y - 5,
+    rotation = self.rotation,
+    world = self.world,
+    camera = self.camera,
+    typeName = 'longball',
+    targetKind = 'player'
+  })
+
+  self.canShoot = false
+  self.canShootTimer = self.canShootTimerMax
 end
 
 return Enemy
