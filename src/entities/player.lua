@@ -64,7 +64,7 @@ function Player:update (dt)
     self:accelerateForward(dt)
   end
 
-  if (love.keyboard.isDown('x') or love.keyboard.isDown('space')) and self.canShoot then
+  if (love.keyboard.isDown('x') or love.keyboard.isDown('space')) then
     self:shoot()
   end
 
@@ -132,11 +132,15 @@ function Player:updateShooter (dt)
 end
 
 function Player:shoot ()
+  if not self.canShoot then
+    return
+  end
+
   local center = self:getCenter()
 
   Bullet({
-    x = center.x,
-    y = center.y,
+    x = center.x - 5,
+    y = center.y - 5,
     rotation = self.rotation,
     world = self.world,
     camera = self.camera

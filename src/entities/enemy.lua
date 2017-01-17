@@ -3,6 +3,7 @@ local _ = require('src/common')
 local Entity = require('src/entities/entity')
 local Explosion = require('src/entities/explosion')
 local Gem = require('src/entities/gem')
+local Bullet = require('src/entities/bullet')
 
 local enemyImage = nil
 local damageSound = nil
@@ -151,13 +152,15 @@ function Enemy:damage ()
 end
 
 function Enemy:die ()
+  local center = self:getCenter()
+
   self:destroy()
   self.camera:shake(5)
   deathSound:play()
 
   Explosion({
-    x = self.x - 20,
-    y = self.y - 20,
+    x = center.x,
+    y = center.y,
     world = self.world,
     camera = self.camera,
     effectName = 'fx7'
@@ -165,8 +168,8 @@ function Enemy:die ()
 
   if self.hasGem then
     Gem({
-      x = self.x + 2,
-      y = self.y + 2,
+      x = center.x,
+      y = center.y,
       world = self.world,
       camera = self.camera,
       typeName = 'ruby'

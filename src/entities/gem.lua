@@ -95,8 +95,8 @@ function Gem:new (data)
   self.animation = gem.animation
   self.points = love.math.random(10, 50)
   self.angleAcceleration = lume.randomchoice({-2, 2})
-  self.xvel = lume.randomchoice({-5, -1, 0, 1, 5})
-  self.yvel = lume.randomchoice({-5, -1, 0, 1, 5})
+  self.xvel = lume.randomchoice({-5, -2, 0, 2, 5})
+  self.yvel = lume.randomchoice({-5, -2, 0, 2, 5})
   self.isVisible = true
 
   self.timer = Timer.new()
