@@ -19,9 +19,13 @@ function media.loadBackgroundImages ()
   )
 end
 
-function media.playBackgroundPlaylist ()
+function media.loadBackgroundPlaylist ()
   -- TBD: more songs in background
-  bgSong = love.audio.newSource('assets/music/uoki_toki-king_of_my_castle.mp3', 'static')
+  bgSong = love.audio.newSource('assets/music/adropday-hotline_berlin.mp3', 'static')
+  -- bgSong = love.audio.newSource('assets/music/uoki_toki-king_of_my_castle.mp3', 'static')
+end
+
+function media.playBackgroundPlaylist ()
   -- bgSong:play()
 end
 

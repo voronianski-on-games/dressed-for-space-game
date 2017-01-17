@@ -15,6 +15,7 @@ end
 
 function game:enter ()
   map:reset()
+  media.playBackgroundPlaylist()
 end
 
 function game:update (dt)

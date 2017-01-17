@@ -14,9 +14,10 @@ function love.load ()
   love.mouse.setVisible(false)
 
   shaders.load()
+
   media.loadImageFonts()
   media.loadBackgroundImages()
-  media.playBackgroundPlaylist()
+  media.loadBackgroundPlaylist()
 
   Player.loadAssets()
   Bullet.loadAssets()
