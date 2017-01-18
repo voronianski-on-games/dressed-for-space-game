@@ -3,6 +3,7 @@ local _ = require('src/common')
 local Entity = require('src/entities/entity')
 
 local bullet1Image, bullet2Image
+local bullet3Image, bullet4Image
 local bullets = {}
 
 local Bullet = Entity:extend()
@@ -13,9 +14,12 @@ Bullet.updateOrder = 2
 function Bullet.loadAssets ()
   bullet1Image = love.graphics.newImage('assets/images/bullet1.png')
   bullet2Image = love.graphics.newImage('assets/images/bullet2.png')
+  bullet3Image = love.graphics.newImage('assets/images/bullet3.png')
+  bullet4Image = love.graphics.newImage('assets/images/bullet4.png')
 
   bullets.default = {image = bullet1Image}
   bullets.longball = {image = bullet2Image}
+  bullets.laser = {image = bullet4Image}
 end
 
 function Bullet:new (data)
@@ -76,8 +80,8 @@ function Bullet:cleanIfUnused ()
   end
 end
 
-function Bullet:isTarget (value, kind)
-  return self.targetKind == kind and value.kind == kind
+function Bullet:isTarget (target, kind)
+  return self.targetKind == kind and target.kind == kind
 end
 
 return Bullet
